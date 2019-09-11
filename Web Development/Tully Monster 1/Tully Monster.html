@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The Tully Monster</title>
+		<style>
+			body {font-family: arial, "sans-serif";}
+		</style>
+	</head>
+	<body>
+
+		<h1>The Tully Monster</h1>
+
+		<p>The Tully Monster is a fossilised creature believed to have lived 300 million years ago. It was discovered by and named after Francis Tully in 1958.</p>
+
+		<!-- also added a style="display:block" to the monster -->
+		<div id="monster" style="display:block">
+			<img src="tully.png">
+		</div>
+		<button onclick="showHide()" id="showHideBtn">Hide</button>
+
+		<form name="question">
+			<p id="box">Question - How long was the Tully Monster?</p>
+			Answer: <input type="text" name="answer">
+			<button type="button" onclick="box(); validate()">Show answer</button>
+
+			<p id="box2">Click below to find out where it lived?</p>
+			<button type="button" onclick="box2()">Show answer</button>
+		</form>
+
+		<script>
+			const box = () => document.getElementById("box").innerHTML = 'The Tully Monster grew to 35cm long.'	//text supposed to show up when a user clicks box1 button
+			const box2 = () => document.getElementById('box2').innerHTML = 'It lived in tropical estuaries of Illinois, USA.' //text supposed to show up when a user clicks box2 button
+
+			//validation function
+			const validate = () => {
+				const x = document.forms["question"]["answer"].value //getting the input value
+
+				//if the user's submitted nothing, the result will be in a red color
+				//if the user's submitted "35cm", they'll get an alert saying "correct"
+				//if the user's submitted some piece of text but if it's not correct, then just display the result in black color
+				if(x === "") {
+					document.getElementById("box").style.color = "red"
+				} else if (x === "35cm") {
+					alert("Correct!")
+				} else {
+					document.getElementById("box").style.color = "black"
+				}
+			}
+
+			const monster = document.getElementById("monster") //getting the #monster element and storing it in a variable - to prevent repetition
+			//showHide() function which checks whether the #monster div is visible or not and toggles it's appearence (visible to hidden; hidden to visible)
+			const showHide = () => {
+				if(monster.style.display == 'block') {
+					monster.style.display = 'none'
+				} else {
+					monster.style.display = 'block'
+				}
+				//document.write('<h2>Goodbye world!</h2>') //clicking a button with this code in it would completely owerwrite the webpage
+				buttonUpdate() //buttonUpdate() callback every time a user hits the button below tully.png
+			}
+
+			//buttonUpdate() function updates the text of the button below tully.png
+			//if the image is visible, the text on the button's going to be "Hide" and if it's not visible than it's going to be "Show"
+			const buttonUpdate = () => {
+				if (monster.style.display == 'block') {
+					document.getElementById("showHideBtn").innerText = "Hide"
+				} else if (monster.style.display == "none") {
+					document.getElementById("showHideBtn").innerText = "Show"
+				}
+			}
+			buttonUpdate() //running the function right when the webpage loads to make sure that the vaue inside of the Show/Hide button is correct
+		</script>
+	</body>
+</html>
