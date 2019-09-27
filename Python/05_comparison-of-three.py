@@ -14,7 +14,15 @@ elif (number3 > number1 and number3 > number2):
     print(str(number3))
 else:
     print(str(number1))
-    
+
 # end if
 
+#TEST DATA
+# Input 1, 17, 5 -> output 17
+# Input 8, 7, 9 -> output 9
+# Input -5,-5,4 -> output 4
+
+
 ## ACS - Very good indeed .. nice logic. Good variable names and good comments
+
+# 27.9.19 EDIT - just added some test data
