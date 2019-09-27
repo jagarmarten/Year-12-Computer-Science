@@ -1,0 +1,31 @@
+<!-- Copyright (C) 2016 PG Online Ltd -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Roll the dice</title>
+	<style>
+		body, input { font-family: Arial, Helvetica, "sans-serif"; font-size: 15px; }
+		body { text-align:center; }
+	</style>
+</head>
+
+<body>
+<h1>Dice Roll</h1>
+
+<form>
+<div id="diceImage"></div>
+<button type="button" onClick="rollDice();">Roll the dice</button>
+</form>
+
+<script>
+	const images = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg']
+
+	const rollDice = () => {
+		let randomNumber = Math.floor(Math.random() * images.length)
+		console.log(images[randomNumber])
+	}
+</script>
+
+</body>
+</html>
