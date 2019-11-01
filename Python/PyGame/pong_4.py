@@ -24,18 +24,27 @@ done = False
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 
+#ball and paddle sizes
 ball_width = 20
 paddle_width = 15
 paddle_height = 60
 
+#initial position of the ball
 x_val = 250
 y_val = 150
 
-x_pad = 0
-y_pad = 0
+#direction of the ball on x & y axis
+x_direction = 3
+y_direction = 3
 
-x_direction = -1
-y_direction = 0
+#initial position of the left paddle
+x_pad_left = 0
+y_pad_left = 0
+
+#initial position of the right paddle
+x_pad_right = size[0] - paddle_width
+y_pad_right = 0
+
 
 # -- Game Loop
 while not done:
@@ -49,15 +58,27 @@ while not done:
     ## - the up key or down key has been pressed
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
-        y_pad = y_pad - 5
-        if y_pad < 0:
-            y_pad = 0
+        y_pad_left = y_pad_left - 5
+        if y_pad_left < 0:
+            y_pad_left = 0
         #end if
     #end if
     if keys[pygame.K_DOWN]:
-        y_pad = y_pad + 5
-        if y_pad > size[1] - 60:
-            y_pad = size[1] - 60
+        y_pad_left = y_pad_left + 5
+        if y_pad_left > size[1] - 60:
+            y_pad_left = size[1] - 60
+        #end if
+    #end if
+    if keys[pygame.K_s]:
+        y_pad_right = y_pad_right + 5
+        if y_pad_right > size[1] - 60:
+            y_pad_right = size[1] - 60
+        #end if
+    #end if
+    if keys[pygame.K_w]:
+        y_pad_right = y_pad_right - 5
+        if y_pad_right < 0:
+            y_pad_right = 0
         #end if
     #end if
 
@@ -73,21 +94,22 @@ while not done:
         x_direction = x_direction * -1
     #end if
     #changing the direction of the ball once it hits the paddle
-    #if x_val <= 15 and y_val >= y_pad and y_val <= y_pad + 60:
-    #    y_direction = y_direction * -1
-    if x_val <= 15 and y_val >= y_pad and y_val <= y_pad + 60:
+    if x_val <= paddle_width and y_val >= y_pad_left and y_val <= y_pad_left + 60:
         x_direction = x_direction * -1
     #if x_val >= 0 and x_val <= 15
     #end if
-    if x_pad > 0 and y_pad > 0:
-        y_pad = 0
-        x_pad = 0
+
+    #condition which prevents the paddles to go off the screen
+    if (x_pad_left > 0 and y_pad_left > 0) or (x_pad_right > size[0] and y_pad_right > 0):
+        y_pad_left = 0
+        x_pad_left = 0
     #end if
     # -- Screen background is BLACK
     screen.fill(BLACK)
     # -- Draw here
-    pygame.draw.rect(screen, BLUE, (x_val, y_val, ball_width, ball_width))
-    pygame.draw.rect(screen, WHITE, (x_pad, y_pad, paddle_width, paddle_height))
+    pygame.draw.rect(screen, BLUE, (x_val, y_val, ball_width, ball_width)) #drawing the ball
+    pygame.draw.rect(screen, WHITE, (x_pad_left, y_pad_left, paddle_width, paddle_height)) #drawing the left paddle
+    pygame.draw.rect(screen, WHITE, (x_pad_right, y_pad_right, paddle_width, paddle_height)) #drawing the right paddle
     # -- flip display to reveal new position of objects
     pygame.display.flip()
     # -- The clock ticks over
