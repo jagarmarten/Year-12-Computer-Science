@@ -12,7 +12,7 @@ pygame.init()
 
 # -- Blank Screen
 size = (640, 480)
-
++
 screen = pygame.display.set_mode(size)
 
 # -- Title of new window/screen
@@ -45,6 +45,9 @@ y_pad_left = 0
 x_pad_right = size[0] - paddle_width
 y_pad_right = 0
 
+#user score
+score_left = 0
+score_right = 0
 
 # -- Game Loop
 while not done:
@@ -84,20 +87,37 @@ while not done:
 
     # -- Next event
     # -- Game logic goes after this comment
+
+    #changing the direction of the ball once it hits the left paddle
+    if x_val < paddle_width and y_val > y_pad_left and y_val < y_pad_left + 60:
+        x_direction = x_direction * -1
+    #end if
+
+    #changing the direction of the ball once it hits the right paddle
+    if x_val >= size[0] - ball_width - paddle_width and y_val > y_pad_right and y_val < y_pad_right + 60:
+        x_direction = x_direction * -1
+    #end if
+
+    #getting the current coordinates of the ball
     x_val = x_val + x_direction
     y_val = y_val + y_direction
 
     if y_val > (size[1] - ball_width) or y_val < (0):
         y_direction = y_direction * -1
     #end if
-    if x_val > (size[0] - ball_width) or x_val < (0):
-        x_direction = x_direction * -1
+    #if x_val > (size[0] - ball_width) or x_val < (0):
+    #    x_direction = x_direction * -1
     #end if
-    #changing the direction of the ball once it hits the paddle
-    if x_val <= paddle_width and y_val >= y_pad_left and y_val <= y_pad_left + 60:
-        x_direction = x_direction * -1
-    #if x_val >= 0 and x_val <= 15
-    #end if
+
+    if x_val  > size[0]:
+        score_left = score_left + 1
+        x_val = size[0]/2 - ball_width/2
+        y_val = size[1]/2 - ball_width/2
+    elif x_val < 0 - ball_width:
+        score_right = score_right + 1
+        x_val = size[0]/2 - ball_width/2
+        y_val = size[1]/2 - ball_width/2
+        pygame.time.delay(3000)
 
     #condition which prevents the paddles to go off the screen
     if (x_pad_left > 0 and y_pad_left > 0) or (x_pad_right > size[0] and y_pad_right > 0):
@@ -110,6 +130,15 @@ while not done:
     pygame.draw.rect(screen, BLUE, (x_val, y_val, ball_width, ball_width)) #drawing the ball
     pygame.draw.rect(screen, WHITE, (x_pad_left, y_pad_left, paddle_width, paddle_height)) #drawing the left paddle
     pygame.draw.rect(screen, WHITE, (x_pad_right, y_pad_right, paddle_width, paddle_height)) #drawing the right paddle
+
+    #font to use, size, bold, italics
+    font = pygame.font.SysFont('Calibri', 40, True, False)
+    #create the text - text value, anti-aliasing, color
+    text = font.render(str(score_left) + " : " + str(score_right), True, WHITE)
+    text_size = text.get_rect().width  # getting the size of the text rectangle - I'll use it later to center the text properly
+    #put the text on the screen at a position in [ ]...
+    screen.blit(text, [(size[0]/2) - (text_size/2), 0])
+
     # -- flip display to reveal new position of objects
     pygame.display.flip()
     # -- The clock ticks over

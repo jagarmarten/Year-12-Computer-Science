@@ -53,6 +53,11 @@ while not done:
     x_val = x_val + x_direction
     y_val = y_val + y_direction
 
+    #changing the direction of the ball once it hits the paddle
+    if x_val < 15 and y_val > y_pad and y_val < y_pad + 60:
+        x_direction = x_direction * -1
+    #end if
+
     if y_val > (size[1] - ball_width) or y_val < (0):
         y_direction = y_direction * -1
 
