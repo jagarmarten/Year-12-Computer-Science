@@ -36,5 +36,5 @@ if position == -1:
     print("Number " + str(searched_number) + " wasn't found in the list.")
 else:
     print("Number " + str(searched_number) + " was found at position " + str(position) + " in the numbers list")
-    print("Check - number at position " + str(position) + " printed directly from the list: " + str(numbers[position]))
+    print("*Check* - number at position " + str(position) + " printed directly from the list: " + str(numbers[position]))
 # ENDIF
