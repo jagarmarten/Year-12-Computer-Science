@@ -10,7 +10,7 @@ def binary_search(sought_item, list):
     end = len(list) - 1
 
     while start <= end and not found:
-        midpoint = int((start + end / 2))
+        midpoint = int((start + (end - start) / 2))
         if sought_item == list[midpoint]:
             found = True
             index = midpoint
