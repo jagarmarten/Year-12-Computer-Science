@@ -29,11 +29,12 @@ import random
 
 from list_of_numbers import numbers  # importing the names list from list_of_names.py
 
-searched_number = int(input("What name are you searching for?")) #ask user what name they want to search for
+searched_number = int(input("What number are you searching for?")) #ask user what name they want to search for
 position = binary_search(searched_number, numbers)
 
 if position == -1:
     print("Number " + str(searched_number) + " wasn't found in the list.")
 else:
     print("Number " + str(searched_number) + " was found at position " + str(position) + " in the numbers list")
+    print("Check - number at position " + str(position) + " printed directly from the list: " + str(numbers[position]))
 # ENDIF
