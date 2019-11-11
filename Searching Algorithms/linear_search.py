@@ -1,11 +1,11 @@
 #functions
-def linear_search(sought_item, array):
+def linear_search(sought_item, list):
     found = False #setting the initial val of found to False
     index = -1 #setting index to -1 - it's useful to determine whether an item was or wasn't found
     count = 0 #setting the counter variable used in the while loop
 
-    #continue iterating, while count is smaller than the length of array and the item wasn't found
-    while count < len(array) and not found:
+    #continue iterating, while count is smaller than the length of list and the item wasn't found
+    while count < len(list) and not found:
         #if the name at position count is the exact same as the one we're searching for, do these steps:
         if names[count] == sought_item:
             index = count #giving the value of count to index
