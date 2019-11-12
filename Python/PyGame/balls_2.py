@@ -34,20 +34,20 @@ class Ball():
 
     def __init__(self, x, y, col):
         self.color = col
-        self.x_coord = 0
-        self.y_coord = 0
+        self.x_coord = x
+        self.y_coord = y
         self.size = 10
 
     def draw(self):
-        pygame.draw.circle(screen, snow_flake.color,
-                           (snow_flake.x_coord, snow_flake.y_coord), snow_flake.size)
+        pygame.draw.circle(screen, self.color, (self.x_coord, self.y_coord), self.size)
 
     def move(self):
         self.x_coord += 2
         self.y_coord += 2
 
 
-snow_flake = Ball(100, 100, WHITE)
+one = Ball(100, 100, WHITE)
+two = Ball(200, 200, YELLOW)
 
 ### -- Game Loop
 while not done:
@@ -61,8 +61,11 @@ while not done:
     # -- Screen background is BLACK
     screen.fill(BLACK)
 
-    snow_flake.draw()
-    snow_flake.move()
+    one.draw()
+    one.move()
+
+    two.draw()
+    two.move()
 
     pygame.display.flip()
     # - The clock ticks over
