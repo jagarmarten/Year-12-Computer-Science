@@ -10,15 +10,6 @@ YELLOW = (255, 255, 0)
 # -- Initialise PyGame
 pygame.init()
 
-# -- Blank Screen
-size = (640, 480)
-
-screen = pygame.display.set_mode(size)
-
-# -- Title of new window/screen
-pygame.display.set_caption("My Window")
-
-
 # -- flip display to reveal new position of objects
 # Create an address
 # -- Exit game flag set to false
@@ -28,26 +19,45 @@ done = False
 clock = pygame.time.Clock()
 
 #Classes & functions
+class Screen():
+    def __init__(self, x_val, y_val, caption):
+        self.x = x_val
+        self.y = y_val
+        self.caption = caption
+        pygame.display.set_mode((self.x, self.y))
+        pygame.display.set_caption(self.caption)
 
-
+    ## fill doesn't work yet
+    def fill(self, fill_color):
+        self.color = fill_color
+    
 class Ball():
-
     def __init__(self, x, y, col):
         self.color = col
         self.x_coord = x
         self.y_coord = y
         self.size = 10
 
-    def draw(self):
-        pygame.draw.circle(screen, self.color, (self.x_coord, self.y_coord), self.size)
+    def draw(self, screen):
+        pygame.draw.circle(screen, self.color, (self.x_coord, self.y_coord), self.size) #getting error when calling screen variable
 
     def move(self):
         self.x_coord += 2
         self.y_coord += 2
 
+    #def balls(self, list_of_balls):
+        #self.list_of_balls = list_of_balls
+        #for ball in list_of_balls:
+            #ball = Ball(ball[0], ball[1], ball[2])
+            #ball.draw()
+            #ball.move()
 
-one = Ball(100, 100, WHITE)
-two = Ball(200, 200, YELLOW)
+balls_list = [[100, 100, WHITE], [200, 100, YELLOW], [300, 150, BLUE]]
+
+one = Ball(balls_list[0][0], balls_list[0][1], balls_list[0][2])
+two = Ball(balls_list[1][0], balls_list[1][1], balls_list[1][2])
+
+screen = Screen(640, 480, "Snow")
 
 ### -- Game Loop
 while not done:
@@ -61,11 +71,16 @@ while not done:
     # -- Screen background is BLACK
     screen.fill(BLACK)
 
-    one.draw()
-    one.move()
+    #####
+    #I'm unable to move those balls around the screen
+    #####
+    for ball in balls_list:
+        ball = Ball(ball[0], ball[1], ball[2])
+        ball.draw(screen)
+        ball.move()
 
-    two.draw()
-    two.move()
+    one.draw(screen)
+    one.move()
 
     pygame.display.flip()
     # - The clock ticks over
