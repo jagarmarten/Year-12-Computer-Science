@@ -20,7 +20,6 @@ screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
 pygame.display.set_caption("My Window")
 
-
 # -- flip display to reveal new position of objects
 # Create an address
 # -- Exit game flag set to false
@@ -30,8 +29,6 @@ done = False
 clock = pygame.time.Clock()
 
 #Classes & functions
-
-
 class Ball():
     def __init__(self, x, y, x_dir, y_dir, col):
         self.color = col
