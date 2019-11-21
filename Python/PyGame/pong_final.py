@@ -12,7 +12,7 @@ pygame.init()
 
 # -- Blank Screen
 size = (640, 480)
-+
+
 screen = pygame.display.set_mode(size)
 
 # -- Title of new window/screen
