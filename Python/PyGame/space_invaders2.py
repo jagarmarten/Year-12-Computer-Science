@@ -42,6 +42,24 @@ class Invader(pygame.sprite.Sprite):
     #End Procedure
 #End Class
 
+class Bullet(pygame.sprite.Sprite):
+    # Define the constructor for snow
+    def __init__(self, color, width, height, speed):
+        #calling the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        # Set the position of the sprite
+        self.rect = self.image.get_rect()
+        self.speed = speed
+
+    #update method
+    def update(self):
+        self.rect.y = self.rect.y + self.speed
+    #End Procedure
+#End Class
+
 class Player(pygame.sprite.Sprite):
     # Define the constructor for snow
     def __init__(self, color, width, height, lives):
@@ -58,6 +76,7 @@ class Player(pygame.sprite.Sprite):
         self.width = width
         self.height = height
         self.lives = lives
+        self.bullet_count = 50
 
     #update method
     def update(self):
@@ -109,6 +128,13 @@ while not done:
                 player.player_set_speed(-3)  # speed set to -3
             elif event.key == pygame.K_RIGHT:  # - if the right key pressed
                 player.player_set_speed(3)  # speed set to 3
+            elif event.key == pygame.K_SPACE:
+                #creating bullets when space bar is pressed
+                if player.bullet_count == 0:
+                    pass
+                else:
+                    player.bullet_count -= 1
+                    print(player.bullet_count)
         elif event.type == pygame.KEYUP:  # - a key released
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 player.player_set_speed(0)  # speed set to 0
