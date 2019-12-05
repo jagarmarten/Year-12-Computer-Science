@@ -24,13 +24,11 @@ pygame.display.set_caption("Space Invaders")
 #Classes & functions
 class Invader(pygame.sprite.Sprite):
     # Define the constructor for snow
-    def __init__(self, color, width, height, speed):
+    def __init__(self, color, width, height, speed, invader_image):
         #calling the sprite constructor
         super().__init__()
-        # Create a sprite and fill it with colour
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
-        # Set the position of the sprite
+
+        self.image = pygame.image.load("small.png")
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(0, 600)
         self.rect.y = random.randrange(0, 50)
@@ -39,12 +37,13 @@ class Invader(pygame.sprite.Sprite):
     #update method
     def update(self):
         self.rect.y = self.rect.y + self.speed
+        self.image = pygame.image.load("small.png")
     #End Procedure
 #End Class
 
 class Bullet(pygame.sprite.Sprite):
     # Define the constructor for snow
-    def __init__(self, color, width, height, speed):
+    def __init__(self, color, width, height, speed, x_coordinate):
         #calling the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
@@ -53,22 +52,22 @@ class Bullet(pygame.sprite.Sprite):
         # Set the position of the sprite
         self.rect = self.image.get_rect()
         self.speed = speed
+        self.rect.x = x_coordinate + 22.5 #22.5 because I wanted to center the bullet to fire from the cannon
+        self.rect.y = size[1] - height - 26
 
     #update method
     def update(self):
-        self.rect.y = self.rect.y + self.speed
+        self.rect.y = self.rect.y - self.speed
     #End Procedure
 #End Class
 
 class Player(pygame.sprite.Sprite):
     # Define the constructor for snow
-    def __init__(self, color, width, height, lives):
+    def __init__(self, color, width, height, lives, bullet_count):
         #calling the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
-        # Set the position of the sprite
+        self.image = pygame.image.load("cannon.png").convert()
         self.rect = self.image.get_rect()
         self.rect.x = 300
         self.rect.y = size[1] - height
@@ -76,7 +75,7 @@ class Player(pygame.sprite.Sprite):
         self.width = width
         self.height = height
         self.lives = lives
-        self.bullet_count = 50
+        self.bullet_count = bullet_count
 
     #update method
     def update(self):
@@ -87,12 +86,12 @@ class Player(pygame.sprite.Sprite):
         if self.rect.x < 0:
             self.rect.x = 0
             self.speed = 0
+        self.image = pygame.image.load("cannon.png")
     #End Procedure
 
     #set speed method
     def player_set_speed(self, value):
         self.speed = value
-        print(self.rect.x)
     #end procedure
 #End Class
 
@@ -103,17 +102,21 @@ done = False
 invader_group = pygame.sprite.Group()
 #list of all sprites
 all_sprites_group = pygame.sprite.Group()
+bullet_group = pygame.sprite.Group()
 
-player = Player(WHITE, 10, 10, 5)
+player = Player(WHITE, 46, 28, 5, 50)
 all_sprites_group.add(player)
 
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 
+#adding a background image
+background_image = pygame.image.load("invaders.png").convert()
+
 #create x snowflakes
 number_of_invaders = 10
 for x in range(number_of_invaders):
-    my_invader = Invader(BLUE, 10, 10, 1)
+    my_invader = Invader(BLUE, 10, 10, 1, "small.png")
     invader_group.add(my_invader)
     all_sprites_group.add(my_invader)
 
@@ -133,8 +136,10 @@ while not done:
                 if player.bullet_count == 0:
                     pass
                 else:
+                    bullet = Bullet(YELLOW, 2, 10, 2, player.rect.x)
+                    bullet_group.add(bullet)
                     player.bullet_count -= 1
-                    print(player.bullet_count)
+                    all_sprites_group.add(bullet) 
         elif event.type == pygame.KEYUP:  # - a key released
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 player.player_set_speed(0)  # speed set to 0
@@ -142,20 +147,35 @@ while not done:
         #ENDIF
     #ENDFOR
 
+    #ALex helped me with this one
+    for bullet_shot in bullet_group:
+        invader_hit_group = pygame.sprite.spritecollide(bullet_shot, invader_group, True)
+        for bullet_shot in invader_hit_group:
+                bullet_group.remove(bullet)
+                all_sprites_group.remove(bullet)
+        if bullet.rect.y < 0:
+                bullet_group.remove(bullet)
+                all_sprites_group.remove(bullet)
+
     # -- Game logic goes after this comment
     player_hit_group = pygame.sprite.spritecollide(player, invader_group, True)
-    all_sprites_group.update() # update all sprites
+    # update all sprites
+    all_sprites_group.update()
 
-    screen.fill(BLACK)  # -- Screen background is BLACK
+    #loading the background image
+    screen.blit(background_image, [-60, 0])
 
     #font to use, size, bold, italics
     font = pygame.font.SysFont('Calibri', 20, True, False)
     #create the text - text value, anti-aliasing, color
-    text = font.render("Lives: " + str(player.lives), True, WHITE)
+    lives = font.render("Lives: " + str(player.lives), True, WHITE)
+    bullets_left = font.render("Bullets: " + str(player.bullet_count), True, WHITE)
     # getting the size of the text rectangle - I'll use it later to center the text properly
-    text_size = text.get_rect().width
+    text_size = lives.get_rect().width
+    text_size2 = bullets_left.get_rect().width
     #put the text on the screen at a position in [ ]...
-    screen.blit(text, [20, 20])
+    screen.blit(lives, [20, 20])
+    screen.blit(bullets_left, [20, 45])
 
     all_sprites_group.draw(screen) # draw the list of all sprites to the screen
 
