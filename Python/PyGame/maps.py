@@ -92,6 +92,20 @@ while not done:
         #endif
     #next event
     
+    
+    #key press handlers
+    if event.type == pygame.KEYDOWN:  # - a key is pressed down
+        if event.key == pygame.K_LEFT:  # - if the left key pressed
+            pacman.player_update_speed(-2, 0)
+        elif event.key == pygame.K_RIGHT:  # - if the right key pressed
+            pacman.player_update_speed(2, 0)
+        elif event.key == pygame.K_UP:  # - if the left key pressed
+            pacman.player_update_speed(0, -2)
+        elif event.key == pygame.K_DOWN:  # - if the right key pressed
+            pacman.player_update_speed(0, 2)
+        #endif
+    #endif
+
     # -- Check for collisions between pacman and wall tiles
     player_hit_list = pygame.sprite.spritecollide(pacman, wall_list, False)
     for foo in player_hit_list:
@@ -102,20 +116,6 @@ while not done:
     pacman_old_x = pacman.rect.x
     pacman_old_y = pacman.rect.y
     all_sprites_list.update()
-    
-    #key press handlers
-    if event.type == pygame.KEYDOWN:  # - a key is pressed down
-        if event.key == pygame.K_LEFT:  # - if the left key pressed
-            pacman.player_update_speed(-1, 0)
-        elif event.key == pygame.K_RIGHT:  # - if the right key pressed
-            pacman.player_update_speed(1, 0)
-        elif event.key == pygame.K_UP:  # - if the left key pressed
-            pacman.player_update_speed(0, -1)
-        elif event.key == pygame.K_DOWN:  # - if the right key pressed
-            pacman.player_update_speed(0, 1)
-        #endif
-    #endif
-
     
 
     # -- Screen background is BLACK
