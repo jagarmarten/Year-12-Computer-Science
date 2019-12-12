@@ -45,11 +45,14 @@ class Tile(pygame.sprite.Sprite):
         self.rect.x = x_ref
         self.rect.y = y_ref
         
+        self.rect.x += x_speed
+        self.rect.y += y_speed
 
 # Create a list of all sprites
 all_sprites_list = pygame.sprite.Group()
 # Create a list of tiles for the walls
 wall_list = pygame.sprite.Group()
+
 # Create walls on the screen (each tile is 20 x 20 so alter cords)
 for y in range(10):
     for x in range (10):
@@ -60,6 +63,9 @@ for y in range(10):
         #end if
     #end for
 #end for
+pacman = Player(YELLOW, 10, 10, 20, 20)
+
+all_sprites_list.add(pacman)
 
 ### -- Game Loop
 while not done:
@@ -67,16 +73,39 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-        #End If
-    #Next event
+        #endif
+    #next event
+    
+    # -- Check for collisions between pacman and wall tiles
+    player_hit_list = pygame.sprite.spritecollide(pacman, wall_list, False)
+    for foo in player_hit_list:
+        pacman.player_update_speed(0, 0)
+        pacman.rect.x = pacman_old_x
+        pacman.rect.y = pacman_old_y
+    # Run the update function for all sprites
+    pacman_old_x = pacman.rect.x
+    pacman_old_y = pacman.rect.y
+    all_sprites_list.update()
+    
+    #key press handlers
+    if event.type == pygame.KEYDOWN:  # - a key is pressed down
+        if event.key == pygame.K_LEFT:  # - if the left key pressed
+            pacman.player_update_speed(-1, 0)
+        elif event.key == pygame.K_RIGHT:  # - if the right key pressed
+            pacman.player_update_speed(1, 0)
+        elif event.key == pygame.K_UP:  # - if the left key pressed
+            pacman.player_update_speed(0, -1)
+        elif event.key == pygame.K_DOWN:  # - if the right key pressed
+            pacman.player_update_speed(0, 1)
+        #endif
+    #endif
 
-    #wall_list.update()
-    #all_sprites_list.update()
+    
+
+    # -- Screen background is BLACK
     screen.fill(BLACK)
     all_sprites_list.draw(screen)
     # -- Game logic goes after this comment
-    # -- Screen background is BLACK
-    
     pygame.display.flip()
     # - The clock ticks over
     clock.tick(60)
