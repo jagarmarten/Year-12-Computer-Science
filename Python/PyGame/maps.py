@@ -45,6 +45,22 @@ class Tile(pygame.sprite.Sprite):
         self.rect.x = x_ref
         self.rect.y = y_ref
         
+class Player(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, color, width, height, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+        self.x_speed = 0
+        self.y_speed = 0
+
+    def player_update_speed(self, x_speed, y_speed):
         self.rect.x += x_speed
         self.rect.y += y_speed
 
