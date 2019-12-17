@@ -68,6 +68,8 @@ class Player(pygame.sprite.Sprite):
 all_sprites_list = pygame.sprite.Group()
 # Create a list of tiles for the walls
 wall_list = pygame.sprite.Group()
+#create a list of sprites of enemies
+enemy_list = pygame.sprite.Group()
 
 # Create walls on the screen (each tile is 20 x 20 so alter cords)
 for y in range(10):
