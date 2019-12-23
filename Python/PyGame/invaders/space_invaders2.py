@@ -63,7 +63,7 @@ class Bullet(pygame.sprite.Sprite):
 
 class Player(pygame.sprite.Sprite):
     # Define the constructor for snow
-    def __init__(self, color, width, height, lives, bullet_count):
+    def __init__(self, width, height, lives, bullet_count):
         #calling the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
@@ -104,7 +104,7 @@ invader_group = pygame.sprite.Group()
 all_sprites_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
 
-player = Player(WHITE, 46, 28, 5, 50)
+player = Player(46, 28, 5, 50)
 all_sprites_group.add(player)
 
 # -- Manages how fast screen refreshes
@@ -116,7 +116,7 @@ background_image = pygame.image.load("invaders.png").convert()
 #create x snowflakes
 number_of_invaders = 10
 for x in range(number_of_invaders):
-    my_invader = Invader(BLUE, 10, 10, 1, "small.png")
+    my_invader = Invader(BLUE, 10, 10, 1, "cannon.png")
     invader_group.add(my_invader)
     all_sprites_group.add(my_invader)
 
