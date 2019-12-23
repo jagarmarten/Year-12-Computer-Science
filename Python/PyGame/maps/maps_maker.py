@@ -118,13 +118,16 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-        #endif
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
+            column = mouse_pos_x // 20
+            row = mouse_pos_y // 20
+            print(column, row)
     #next event
     all_sprites_list.update()
     # -- Screen background is BLACK
     screen.fill(BLACK)
     
-    #
     #pygame.draw.line(screen, WHITE, (20, 0), (20, 640), 1)
     all_sprites_list.draw(screen)
     # -- Game logic goes after this comment
