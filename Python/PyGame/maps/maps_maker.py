@@ -122,7 +122,9 @@ while not done:
             mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
             column = mouse_pos_x // 20
             row = mouse_pos_y // 20
-            print(column, row)
+            #print(column, row)
+            map[column][row] = 1
+            print(map)
     #next event
     all_sprites_list.update()
     # -- Screen background is BLACK
