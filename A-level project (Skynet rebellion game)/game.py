@@ -5,6 +5,8 @@ import random # - Import random library
 from pygame.locals import * # - Pygame.locals gives us the access to key coordinates, ...
 pygame.init() # - Initialize the pygame library
 
+from classes import *
+
 
 # Set up the drawing window
 screen = pygame.display.set_mode([800, 600]) # - Set up a new scree of the size 800 x 600 pixels
@@ -15,34 +17,6 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (50, 50, 255)
 YELLOW = (255, 255, 0)
-
-# CLASSES & FUNCTIONS
-
-
-
-# - Platform class
-# -- properties: x-pos, y-pos, x-width, y-width
-class Player(pygame.sprite.Sprite):
-    # Define the constructor for snow
-    def __init__(self, x_pos, y_pos, width, height, color, speed):
-        #calling the sprite constructor
-        super().__init__()
-        # Create a sprite and fill it with colour
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
-        # Set the position of the sprite
-        self.rect = self.image.get_rect()
-        self.rect.x = x_pos
-        self.rect.y = y_pos
-        self.speed = speed
-        self.color = color
-
-    #update method
-    def update(self):
-        self.rect.x = self.rect.x - self.speed
-    #End Procedure
-#End Class
-
 
 # - Create an instance of the Player class
 player = Player(50, 50, 100, 50, BLACK, 1)
