@@ -23,10 +23,23 @@ class Player(pygame.sprite.Sprite):
     # - UPDATE Method
     def update(self):
         # -- Every key pressed will get stored into the keys variable
-        keys = pygame.keys.get_pressed()
+        keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.rect.x = -2
+            self.rect.x -= 1
         if keys[pygame.K_RIGHT]:
-            self.rect.x = +2
+            self.rect.x += 1
     #End Procedure
-#End Class
+# - END OF PLAYER CLASS
+
+# - PLATFORM CLASS
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, x, y, width, height, color):
+        super().__init__()  # -- Calling the sprite constructor
+        self.image = pygame.Surface([width, height])  # -- Create a sprite
+        self.image.fill(color)  # -- Fill the sprite with a color
+        # -- Get the rectangular values for easier positioning
+        self.rect = self.image.get_rect()
+        self.rect.x = x  # -- Set the x_position
+        self.rect.y = y  # -- Set the y_position
+        self.color = color  # -- Set the color
+# - END OF PLATFORM CLASS

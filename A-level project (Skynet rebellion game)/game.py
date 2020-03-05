@@ -5,51 +5,48 @@ import random # - Import random library
 from pygame.locals import * # - Pygame.locals gives us the access to key coordinates, ...
 pygame.init() # - Initialize the pygame library
 
-from classes import *
-
+from classes import * # - Import everything from classes.py
+from constants import * # - Import everything from constants.py
 
 # Set up the drawing window
-screen = pygame.display.set_mode([800, 600]) # - Set up a new scree of the size 800 x 600 pixels
-
-# VARIABLES & CONSTANTS
-# - Colors
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-BLUE = (50, 50, 255)
-YELLOW = (255, 255, 0)
+screen = pygame.display.set_mode([WIDTH, HEIGHT]) # - Set up a new scree of the size 800 x 600 pixels
 
 # - Create an instance of the Player class
 player = Player(50, 50, 100, 50, BLACK, 1)
-# - Create a player group
-player_group = pygame.sprite.Group()
+player_group = pygame.sprite.Group()  # -- Create a player_group
 player_group.add(player) #add player to the player_group
+
 # - Create a platform group
-platform_group = pygame.sprite.Group()
+platform = Platform(0, HEIGHT - 20, WIDTH, 20, GREEN) # - Create a full-width platform located at the bottom 
+platform_group = pygame.sprite.Group() # -- Create a platform_group
+platform_group.add(platform) # -- Add the platform to the platform_group
+
 # - Create an all_sprites group
 all_sprites_group = pygame.sprite.Group()
-# - Add the player_group and platform_group to the all_sprites_group
-all_sprites_group.add(player_group)
-all_sprites_group.add(platform_group)
+all_sprites_group.add(player_group) # -- Add the player_group to all_sprites_group
+all_sprites_group.add(platform_group) # -- Add the platform_group to all_sprites_group
 
 # - Run until the user asks to Quit
 running = True
 
-# -- Main while loop
+# - MAIN WHILE LOOP
 while running:
-    # -- Close the window if the user clicks the Quit button
+    # - Event listener
     for event in pygame.event.get():
+        # -- CLose the window if the user clicks the close button
         if event.type == pygame.QUIT:
             running = False
 
     # - Fill the background with white
     screen.fill((255, 255, 255))
 
-    all_sprites_group.draw(screen)
-    
     # -- Draw here:
+    all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
+    all_sprites_group.update() # -- Update all the sprites
 
     # -- Flip the display
     pygame.display.flip()
 
 # -- Exit the pygame
 pygame.quit()
+# - END OF THE MAIN WHILE LOOP
