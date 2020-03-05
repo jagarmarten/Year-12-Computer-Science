@@ -3,7 +3,6 @@
 WIDTH = 800
 HEIGHT = 600
 
-
 # - COLORS
 WHITE = (255, 255, 255)
 
@@ -23,3 +22,4 @@ BLACK = (0, 0, 0)
 SHADOW = (192, 192, 192)
 
 # - OTHER CONSTANTS
+GRAVITY = 1

@@ -4,6 +4,8 @@ import math  # - Import math library
 import random  # - Import random library
 from pygame.locals import * # - Pygame.locals gives us the access to key coordinates, ...
 
+from constants import *  # - Import everything from constants.py
+
 # - PLAYER CLASS
 # -- properties: x-pos, y-pos, width, height, color & speed
 class Player(pygame.sprite.Sprite):
@@ -28,6 +30,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x -= 1
         if keys[pygame.K_RIGHT]:
             self.rect.x += 1
+
+        self.rect.y += GRAVITY
     #End Procedure
 # - END OF PLAYER CLASS
 
