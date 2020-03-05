@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = y_pos  # -- Set the y_position
         self.speed = speed  # -- Set the speed
         self.color = color  # -- Set the color
-
+        self.pos = (0, 0)
     # - UPDATE Method
     def update(self):
         # -- Every key pressed will get stored into the keys variable
@@ -31,7 +31,9 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
             self.rect.x += 1
 
-        self.rect.y += GRAVITY
+        self.rect.y += GRAVITY # -- Make the user fall by default
+
+        self.pos = self.rect.midbottom # -- Getting the midbottom position of the sprite - this speeds things up
     #End Procedure
 # - END OF PLAYER CLASS
 

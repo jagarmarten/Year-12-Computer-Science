@@ -12,7 +12,7 @@ from constants import * # - Import everything from constants.py
 screen = pygame.display.set_mode([WIDTH, HEIGHT]) # - Set up a new scree of the size 800 x 600 pixels
 
 # - Create an instance of the Player class
-player = Player(50, 50, 100, 50, BLACK, 1)
+player = Player(0, 0, 20, 35, BLACK, 1)
 player_group = pygame.sprite.Group()  # -- Create a player_group
 player_group.add(player) #add player to the player_group
 
