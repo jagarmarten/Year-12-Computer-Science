@@ -62,7 +62,7 @@ while running:
     if hit:
         player.pos[1] = hit[0].rect.top # -- Set the player Y position to hit[0].rect.top
         player.gravity = 0 # -- Preventing the player from further falling down
-        player.isOnPlatform = True
+        player.isOnPlatform = True # -- Setting the isOnPlatform to true since the player sprite is on the platform
     else:
         player.gravity = 1 # -- Set the gravity to 1 if the player goes off a platform
 
