@@ -23,6 +23,8 @@ class Player(pygame.sprite.Sprite):
         self.color = color  # -- Set the color
         self.pos = [0, 0] # -- Default position of the player
         self.gravity = 1 # -- Speed by which the user will fall down
+        self.isJumping = False
+        self.maxJump = 150
     # - END CONSTRUCTOR
 
     # - UPDATE Method
@@ -41,6 +43,23 @@ class Player(pygame.sprite.Sprite):
         # -- self.rect.midbottom gives us the middle X value and bottom Y value of the sprite
         self.pos[0] = self.rect.midbottom[0] # -- set the self.pos[0] to the midbottom X value
         self.pos[1] = self.rect.midbottom[1] # -- set the self.pos[1] to the midbottom Y value
+    # - END METHOD
+
+    # - JUMP METHOD
+    def jump(self):
+        # -- max height
+        # -- current height
+        # -- run until the current height == max height
+        if self.isJumping:
+            if self.maxJump >= 0:
+                self.maxJump -= 1
+                originalPos = self.rect.y
+                self.rect.y -= 2
+            else:
+                self.isJumping = False
+                self.maxJump = 150
+                self.gravity = 1
+        
     # - END METHOD
 # - END OF PLAYER CLASS
 

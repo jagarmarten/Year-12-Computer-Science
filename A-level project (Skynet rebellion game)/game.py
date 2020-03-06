@@ -19,10 +19,13 @@ player_group.add(player) #add player to the player_group
 # - Create a platform group
 p1 = Platform(0, HEIGHT - 20, WIDTH, 20, GREEN) # - Create a full-width platform located at the bottom 
 p2 = Platform(20, HEIGHT - 100, 100, 20, LIGHTGREEN)
+p3 = Platform(WIDTH - 600, HEIGHT - 150, 200, 20, BLUE)
+p4 = Platform(WIDTH - 500, HEIGHT - 500, 200, 40, PURPLE)
 platform_group = pygame.sprite.Group() # -- Create a platform_group
 platform_group.add(p1) # -- Add the platform to the platform_group
 platform_group.add(p2)  # -- Add the platform to the platform_group
-
+platform_group.add(p3)  # -- Add the platform to the platform_group
+platform_group.add(p4)  # -- Add the platform to the platform_group
 # - Create an all_sprites group
 all_sprites_group = pygame.sprite.Group()
 all_sprites_group.add(player_group) # -- Add the player_group to all_sprites_group
@@ -31,20 +34,24 @@ all_sprites_group.add(platform_group) # -- Add the platform_group to all_sprites
 # - Run until the user asks to Quit
 running = True
 
-# - MAIN WHILE LOOP
+# - MAIN WHILE LOOP 
 while running:
     # - Event listener
     for event in pygame.event.get():
         # -- CLose the window if the user clicks the close button
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                player.isJumping = True
 
     # - Fill the background with white
     screen.fill((255, 255, 255))
 
-    # -- Draw here:
+    # -- Draw here
     all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
     all_sprites_group.update() # -- Update all the sprites
+    player.jump()
 
     # -- Check whether the player has collided with the platform
     hit = pygame.sprite.spritecollide(player, platform_group, False) # -- False means don't delete it
