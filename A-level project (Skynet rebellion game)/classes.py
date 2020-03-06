@@ -23,8 +23,9 @@ class Player(pygame.sprite.Sprite):
         self.color = color  # -- Set the color
         self.pos = [0, 0] # -- Default position of the player
         self.gravity = 1 # -- Speed by which the user will fall down
-        self.isJumping = False
-        self.maxJump = 150
+        self.isJumping = False # -- Variable used later in the jump() method
+        self.isOnPlatform = False # -- Variable used to prevent the player from jumping multiple times when pressing space
+        self.maxJump = 200 # -- Maximum jump height
     # - END CONSTRUCTOR
 
     # - UPDATE Method
@@ -55,7 +56,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y -= 2 # -- Jump by 2 steps in the Y direction
             else:
                 self.isJumping = False # -- Once the jumping is done, set the isJumping back to False
-                self.maxJump = 150 # -- set the maxJump to the default value
+                self.maxJump = 200 # -- set the maxJump to the default value
             # - END JUMP IF
         # - END IF
     # - END METHOD

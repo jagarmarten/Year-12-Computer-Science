@@ -26,6 +26,7 @@ platform_group.add(p1) # -- Add the platform to the platform_group
 platform_group.add(p2)  # -- Add the platform to the platform_group
 platform_group.add(p3)  # -- Add the platform to the platform_group
 platform_group.add(p4)  # -- Add the platform to the platform_group
+
 # - Create an all_sprites group
 all_sprites_group = pygame.sprite.Group()
 all_sprites_group.add(player_group) # -- Add the player_group to all_sprites_group
@@ -43,7 +44,9 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                player.isJumping = True # -- isJumping is a property of the Player object which is False by default
+                if player.isOnPlatform == True:
+                    player.isJumping = True # -- isJumping is a property of the Player object which is False by default
+                    player.isOnPlatform = False # -- bolean used to check whether the player is on the platform (using the hit group)
 
     # - Fill the background with white
     screen.fill((255, 255, 255))
@@ -59,6 +62,7 @@ while running:
     if hit:
         player.pos[1] = hit[0].rect.top # -- Set the player Y position to hit[0].rect.top
         player.gravity = 0 # -- Preventing the player from further falling down
+        player.isOnPlatform = True
     else:
         player.gravity = 1 # -- Set the gravity to 1 if the player goes off a platform
 
