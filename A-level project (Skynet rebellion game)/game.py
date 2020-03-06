@@ -12,14 +12,16 @@ from constants import * # - Import everything from constants.py
 screen = pygame.display.set_mode([WIDTH, HEIGHT]) # - Set up a new scree of the size 800 x 600 pixels
 
 # - Create an instance of the Player class
-player = Player(0, 0, 20, 35, BLACK, 1)
+player = Player(20, 20, 20, 35, BLACK, 1)
 player_group = pygame.sprite.Group()  # -- Create a player_group
 player_group.add(player) #add player to the player_group
 
 # - Create a platform group
-platform = Platform(0, HEIGHT - 20, WIDTH, 20, GREEN) # - Create a full-width platform located at the bottom 
+p1 = Platform(0, HEIGHT - 20, WIDTH, 20, GREEN) # - Create a full-width platform located at the bottom 
+p2 = Platform(20, HEIGHT - 100, 100, 20, LIGHTGREEN)
 platform_group = pygame.sprite.Group() # -- Create a platform_group
-platform_group.add(platform) # -- Add the platform to the platform_group
+platform_group.add(p1) # -- Add the platform to the platform_group
+platform_group.add(p2)  # -- Add the platform to the platform_group
 
 # - Create an all_sprites group
 all_sprites_group = pygame.sprite.Group()
@@ -50,6 +52,8 @@ while running:
     if hit:
         player.pos[1] = hit[0].rect.top # -- Set the player Y position to hit[0].rect.top
         player.gravity = 0 # -- Preventing the player from further falling down
+    else:
+        player.gravity = 1
         #print(hit[0].rect.top)
         #print(player.pos[1])
 
