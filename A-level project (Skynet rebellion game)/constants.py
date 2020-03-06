@@ -3,12 +3,6 @@
 WIDTH = 800
 HEIGHT = 600
 
-# - PLATFORMS - it's an array used for quicker creation of platforms and levels
-platforms_map = [(0, HEIGHT - 20, WIDTH, 20, GREEN),
-                 (20, HEIGHT - 100, 100, 20, LIGHTGREEN),
-                 (200, HEIGHT - 150, 200, 20, BLUE),
-                 (WIDTH - 500, HEIGHT - 500, 200, 40, PURPLE),
-                 (250, HEIGHT - 100, 100, 20, LIGHTGREEN)]
 
 # - COLORS
 WHITE = (255, 255, 255)
@@ -25,3 +19,10 @@ SHADOW = (192, 192, 192)
 
 # - OTHER CONSTANTS
 GRAVITY = 1
+
+# - PLATFORMS - it's an array used for quicker creation of platforms and levels
+PLATFORMS_MAP = [(0, HEIGHT - 20, WIDTH, 20, GREEN),
+                 (20, HEIGHT - 100, 100, 20, LIGHTGREEN),
+                 (200, HEIGHT - 150, 200, 20, BLUE),
+                 (WIDTH - 500, HEIGHT - 500, 200, 40, PURPLE),
+                 (250, HEIGHT - 100, 100, 20, LIGHTGREEN)]
