@@ -43,7 +43,7 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                player.isJumping = True
+                player.isJumping = True # -- isJumping is a property of the Player object which is False by default
 
     # - Fill the background with white
     screen.fill((255, 255, 255))
@@ -51,7 +51,7 @@ while running:
     # -- Draw here
     all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
     all_sprites_group.update() # -- Update all the sprites
-    player.jump()
+    player.jump() # -- Player will jump if isJumping is True
 
     # -- Check whether the player has collided with the platform
     hit = pygame.sprite.spritecollide(player, platform_group, False) # -- False means don't delete it
@@ -60,9 +60,7 @@ while running:
         player.pos[1] = hit[0].rect.top # -- Set the player Y position to hit[0].rect.top
         player.gravity = 0 # -- Preventing the player from further falling down
     else:
-        player.gravity = 1
-        #print(hit[0].rect.top)
-        #print(player.pos[1])
+        player.gravity = 1 # -- Set the gravity to 1 if the player goes off a platform
 
     # -- Flip the display
     pygame.display.flip()

@@ -47,19 +47,17 @@ class Player(pygame.sprite.Sprite):
 
     # - JUMP METHOD
     def jump(self):
-        # -- max height
-        # -- current height
-        # -- run until the current height == max height
+        # -- If the player.isJumping is set to True, do this:
         if self.isJumping:
+            # -- If the maxJump is greater than 0, do this:
             if self.maxJump >= 0:
-                self.maxJump -= 1
-                originalPos = self.rect.y
-                self.rect.y -= 2
+                self.maxJump -= 1 # -- Make the maxJump lower by 1 with each iteration
+                self.rect.y -= 2 # -- Jump by 2 steps in the Y direction
             else:
-                self.isJumping = False
-                self.maxJump = 150
-                self.gravity = 1
-        
+                self.isJumping = False # -- Once the jumping is done, set the isJumping back to False
+                self.maxJump = 150 # -- set the maxJump to the default value
+            # - END JUMP IF
+        # - END IF
     # - END METHOD
 # - END OF PLAYER CLASS
 
