@@ -9,7 +9,7 @@ from constants import *  # - Import everything from constants.py
 # - PLAYER CLASS
 # -- properties: x-pos, y-pos, width, height, color & speed
 class Player(pygame.sprite.Sprite):
-    # Define the constructor for player
+    # - CONSTRUCTOR
     def __init__(self, x_pos, y_pos, width, height, color, speed):
         # -- Calling the sprite constructor
         super().__init__()
@@ -21,24 +21,32 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = y_pos  # -- Set the y_position
         self.speed = speed  # -- Set the speed
         self.color = color  # -- Set the color
-        self.pos = (0, 0)
+        self.pos = [0, 0] # -- Default position of the player
+        self.gravity = 1 # -- Speed by which the user will fall down
+    # - END CONSTRUCTOR
+
     # - UPDATE Method
     def update(self):
         # -- Every key pressed will get stored into the keys variable
         keys = pygame.key.get_pressed()
+        # -- If the left key is pressed, do this:
         if keys[pygame.K_LEFT]:
-            self.rect.x -= 1
+            self.rect.x -= 1 # -- Move the sprite 1 to the left
+        # -- If the right key is pressed, do this:
         if keys[pygame.K_RIGHT]:
-            self.rect.x += 1
+            self.rect.x += 1 # -- Move the sprite 1 to the right
 
-        self.rect.y += GRAVITY # -- Make the user fall by default
+        self.rect.y += self.gravity # -- Make the user fall by default
 
-        self.pos = self.rect.midbottom # -- Getting the midbottom position of the sprite - this speeds things up
-    #End Procedure
+        # -- self.rect.midbottom gives us the middle X value and bottom Y value of the sprite
+        self.pos[0] = self.rect.midbottom[0] # -- set the self.pos[0] to the midbottom X value
+        self.pos[1] = self.rect.midbottom[1] # -- set the self.pos[1] to the midbottom Y value
+    # - END METHOD
 # - END OF PLAYER CLASS
 
 # - PLATFORM CLASS
 class Platform(pygame.sprite.Sprite):
+    # - CONSTRUCTOR
     def __init__(self, x, y, width, height, color):
         super().__init__()  # -- Calling the sprite constructor
         self.image = pygame.Surface([width, height])  # -- Create a sprite
@@ -48,4 +56,5 @@ class Platform(pygame.sprite.Sprite):
         self.rect.x = x  # -- Set the x_position
         self.rect.y = y  # -- Set the y_position
         self.color = color  # -- Set the color
+    # - END CONSTRUCTOR
 # - END OF PLATFORM CLASS

@@ -8,7 +8,7 @@ pygame.init() # - Initialize the pygame library
 from classes import * # - Import everything from classes.py
 from constants import * # - Import everything from constants.py
 
-# Set up the drawing window
+# Set up the screen
 screen = pygame.display.set_mode([WIDTH, HEIGHT]) # - Set up a new scree of the size 800 x 600 pixels
 
 # - Create an instance of the Player class
@@ -43,6 +43,15 @@ while running:
     # -- Draw here:
     all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
     all_sprites_group.update() # -- Update all the sprites
+
+    # -- Check whether the player has collided with the platform
+    hit = pygame.sprite.spritecollide(player, platform_group, False) # -- False means don't delete it
+    # -- If the sprites collide, do this:
+    if hit:
+        player.pos[1] = hit[0].rect.top # -- Set the player Y position to hit[0].rect.top
+        player.gravity = 0 # -- Preventing the player from further falling down
+        #print(hit[0].rect.top)
+        #print(player.pos[1])
 
     # -- Flip the display
     pygame.display.flip()
