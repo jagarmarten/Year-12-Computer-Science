@@ -11,14 +11,13 @@ from constants import * # - Import everything from constants.py
 # Set up the screen
 screen = pygame.display.set_mode([WIDTH, HEIGHT]) # - Set up a new scree of the size 800 x 600 pixels
 
-# - Create an instance of the Player class
-player = Player(20, 20, 20, 35, BLACK, 1)
+player = Player(20, 20, 20, 35, BLACK, 1) # - Create an instance of the Player class
 player_group = pygame.sprite.Group()  # -- Create a player_group
 player_group.add(player) #add player to the player_group
 
 platform_group = pygame.sprite.Group() # -- Create a platform_group
 
-# -- For loop that loop through the PLATFORMS_MAP 
+# -- For loop that loop through the PLATFORMS_MAP
 for platform in PLATFORMS_MAP:
     new_platform = Platform(platform[0], platform[1], platform[2], platform[3], platform[4]) # -- Create a new platform from the PLATFORMS_MAP in constants.py
     platform_group.add(new_platform) # -- Add the platform to the platform_group
