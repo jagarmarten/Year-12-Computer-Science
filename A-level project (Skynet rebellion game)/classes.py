@@ -19,9 +19,10 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x_pos  # -- Set the x_position
         self.rect.y = y_pos  # -- Set the y_position
+        self.pos = [0, 0] # -- Default position of the player
+        self.posTopMid = [0, 0] # -- Top-middle position of the player
         self.speed = speed  # -- Set the speed
         self.color = color  # -- Set the color
-        self.pos = [0, 0] # -- Default position of the player
         self.gravity = 1 # -- Speed by which the user will fall down
         self.isJumping = False # -- Variable used later in the jump() method
         self.isOnPlatform = False # -- Variable used to prevent the player from jumping multiple times when pressing space
@@ -41,9 +42,13 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.y += self.gravity # -- Make the user fall by default
 
-        # -- self.rect.midbottom gives us the middle X value and bottom Y value of the sprite
-        self.pos[0] = self.rect.midbottom[0] # -- set the self.pos[0] to the midbottom X value
-        self.pos[1] = self.rect.midbottom[1] # -- set the self.pos[1] to the midbottom Y value
+        # -- Self.rect.midbottom gives us the middle X value and bottom Y value of the sprite
+        self.pos[0] = self.rect.midbottom[0] # -- set the self.pos[0] to the mid-bottom X value
+        self.pos[1] = self.rect.midbottom[1] # -- set the self.pos[1] to the mid-bottom Y value
+
+        # -- Self.rect.midtop gives us the middle X value and top Y value of the sprite
+        self.posTopMid[0] = self.rect.midtop[0] # -- Set the self.posTopMid[0] to the midtop X value
+        self.posTopMid[1] = self.rect.midtop[1] # -- Set the self.posTopMid[0] to the midtop Y value
     # - END METHOD
 
     # - JUMP METHOD
