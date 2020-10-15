@@ -40,7 +40,8 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
             self.rect.x += 1 # -- Move the sprite 1 to the right
 
-        self.rect.y += self.gravity # -- Make the user fall by default
+        #self.gravity_calc() # -- Make the user fall by default
+        self.rect.y += self.gravity
 
         # -- Self.rect.midbottom gives us the middle X value and bottom Y value of the sprite
         self.pos[0] = self.rect.midbottom[0] # -- set the self.pos[0] to the mid-bottom X value
@@ -49,6 +50,22 @@ class Player(pygame.sprite.Sprite):
         # -- Self.rect.midtop gives us the middle X value and top Y value of the sprite
         self.posTopMid[0] = self.rect.midtop[0] # -- Set the self.posTopMid[0] to the midtop X value
         self.posTopMid[1] = self.rect.midtop[1] # -- Set the self.posTopMid[0] to the midtop Y value
+    # - END METHOD
+
+    # - GRAVITY method
+    def gravity_calc(self):
+        #self.rect.y = self.rect.y + self.gravity
+
+        if self.change_y == 0:
+            self.change_y = 1
+        else:
+            self.change_y += .35
+ 
+        # See if we are on the ground.
+        if self.rect.y >= HEIGHT - self.rect.height and self.change_y >= 0:
+            self.change_y = 0
+            self.rect.y = HEIGHT - self.rect.height
+
     # - END METHOD
 
     # - JUMP METHOD

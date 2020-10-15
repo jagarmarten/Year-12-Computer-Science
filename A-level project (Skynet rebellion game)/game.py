@@ -5,7 +5,7 @@ import random # - Import random library
 from pygame.locals import * # - Pygame.locals gives us the access to key coordinates, ...
 pygame.init() # - Initialize the pygame library
 
-from classes import * # - Import everything from classes.py
+from classes import * # - Import egverything from classes.py
 from constants import * # - Import everything from constants.py
 
 # Set up the screen
@@ -42,7 +42,6 @@ while running:
                 if player.isOnPlatform == True:
                     player.isJumping = True # -- isJumping is a property of the Player object which is False by default
                     player.isOnPlatform = False # -- bolean used to check whether the player is on the platform (using the hit group)
-
     # - Fill the background with white
     screen.fill((255, 255, 255))
 
