@@ -13,12 +13,19 @@ running = True # -- variable 'running' is used to stop the game if the user clos
 class Player(pygame.sprite.Sprite):
     # - Constructor method
     def __init__(self):
-        super().__init__()
-        self.surface = pygame.Surface((50, 100))
-        self.surface.fill(255,255,255)
-        self.rect = self.surface.get_rect(center = (500, 500))
+        super().__init__() # -- calling the methods of the superclass
+        self.image = pygame.Surface([50, 100]) # -- create a new surface - 50 by 100px
+        self.image.fill((255,255,255)) # -- fill the surface with white colour
+        self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
+        self.rect.x = 250 # -- set the x coordinate
+        self.rect.y = 250 # -- set the y coordinate
     # - END Constructor method
 # - END CLASS
+
+player = Player() # -- Create an instance of the Player class
+
+all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
+all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
 
 # - MAIN WHILE LOOP
 # -- this is where the game is being executed
@@ -33,6 +40,8 @@ while running:
     # - END FOR
 
     screen.fill((0, 0, 0)) # -- fill the screen with white colour
+
+    all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
 
     pygame.display.flip() # -- Flip the display
     pygame.time.Clock().tick(60) # -- set the number of frames per second to 60
