@@ -3,6 +3,7 @@ import pygame  # -- import the pygame library
 from pygame.locals import * # -- pygame.locals is a module that contains various pygame constants
 pygame.init()  # -- initialize the pygame library
 
+pygame.display.set_caption('Skynet Rebellion') # -- set the name of the window to 'Skynet Rebellion'
 screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolution of 800 by 600
 
 running = True # -- variable 'running' is used to stop the game if the user closes the window
