@@ -19,7 +19,7 @@ while running:
         # - END IF
     # - END FOR
 
-    screen.fill((255, 255, 255)) # -- fill the screen with white colour
+    screen.fill((0, 0, 0)) # -- fill the screen with white colour
 
     pygame.display.flip() # -- Flip the display
 # - END WHILE
