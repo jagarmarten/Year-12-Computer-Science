@@ -8,6 +8,18 @@ screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolut
 
 running = True # -- variable 'running' is used to stop the game if the user closes the window
 
+# - PLAYER CLASS
+# -- attributes: 
+class Player(pygame.sprite.Sprite):
+    # - Constructor method
+    def __init__(self):
+        super().__init__()
+        self.surface = pygame.Surface((50, 100))
+        self.surface.fill(255,255,255)
+        self.rect = self.surface.get_rect(center = (500, 500))
+    # - END Constructor method
+# - END CLASS
+
 # - MAIN WHILE LOOP
 # -- this is where the game is being executed
 while running:
