@@ -23,6 +23,7 @@ while running:
     screen.fill((0, 0, 0)) # -- fill the screen with white colour
 
     pygame.display.flip() # -- Flip the display
+    pygame.time.Clock().tick(60) # -- set the number of frames per second to 60
 # - END WHILE
 
 pygame.quit() # - Exit the game
