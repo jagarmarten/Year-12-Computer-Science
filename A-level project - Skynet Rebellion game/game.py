@@ -22,10 +22,26 @@ class Player(pygame.sprite.Sprite):
     # - END Constructor method
 # - END CLASS
 
-player = Player() # -- Create an instance of the Player class
+# - Platform CLASS
+# -- attributes: 
+class Platform(pygame.sprite.Sprite):
+    # - Constructor method
+    def __init__(self):
+        super().__init__() # -- calling the methods of the superclass
+        self.image = pygame.Surface([300, 30]) # -- create a new surface - 50 by 100px
+        self.image.fill((0,128,0)) # -- fill the surface with white colour
+        self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
+        self.rect.x = 200 # -- set the x coordinate
+        self.rect.y = 350 # -- set the y coordinate
+    # - END Constructor method
+# - END CLASS
+
+player = Player() # -- create an instance of the Player class
+platform = Platform() # -- create an instance of the Platform class
 
 all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
 all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
+all_sprites_group.add(platform) # -- add the platform sprite into all_sprites_group
 
 # - MAIN WHILE LOOP
 # -- this is where the game is being executed
