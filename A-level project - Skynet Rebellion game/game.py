@@ -71,7 +71,7 @@ while running:
     screen.fill((0, 0, 0)) # -- fill the screen with white colour
 
     all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
-    all_sprites_group.update() # -- Run the Update method on the all_sprites_group
+    all_sprites_group.update() # -- Run the Update method on all_sprites_group
 
     pygame.display.flip() # -- Flip the display
     pygame.time.Clock().tick(60) # -- set the number of frames per second to 60
