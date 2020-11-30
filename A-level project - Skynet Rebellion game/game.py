@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255,255,255)) # -- fill the surface with white colour
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
         self.rect.x = 250 # -- set the x coordinate
-        self.rect.y = 250 # -- set the y coordinate
+        self.rect.y = 100 # -- set the y coordinate
         self.player_on_platform = True # -- player standing on the platform
     # - END Constructor method
 
@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
     # - Gravity method
     def gravity(self):
         # -- if player_on_platform is set to False,
-        if self.player_on_platform != False:
+        if self.player_on_platform == False:
             self.rect.y = self.rect.y + 3 # -- add 3 pixels to the y-direction
     # - END Gravity method
 # - END CLASS
@@ -68,6 +68,11 @@ def collision(group_one, group_two):
         return True # -- return True
     else:
         return False # -- return False if the two groups are not colliding
+# - END FUNCTION
+
+# - collisionCoordinates FUNCTION
+def collisionCoordinates(group_one, group_two):
+    return pygame.sprite.spritecollide(group_one, group_two, False)[0].rect # -- return the spritecollide object
 # - END FUNCTION
 
 player = Player() # -- create an instance of the Player class
@@ -100,8 +105,9 @@ while running:
     # -- If the player and platforms_group collide,
     if collision(player, platforms_group) == True:
         player.player_on_platform = True # -- Set the player_on_platform to True
+        player.rect.bottom = collisionCoordinates(player, platforms_group)[1] # -- set the bottom y-value of player to the top y-value of the platform
     else:
-        player.player_on_platform = False # -- Set the player_on_platform to True
+        player.player_on_platform = False # -- Set the player_on_platform to False
     # -- END IF
 
     pygame.display.flip() # -- Flip the display
