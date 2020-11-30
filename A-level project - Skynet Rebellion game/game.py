@@ -19,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
         self.rect.x = 250 # -- set the x coordinate
         self.rect.y = 250 # -- set the y coordinate
+        self.player_on_platform = True # -- player standing on the platform
     # - END Constructor method
 
     # - Update method
@@ -32,7 +33,16 @@ class Player(pygame.sprite.Sprite):
         # -- if the right arrow key was pressed,
         if key_pressed[pygame.K_RIGHT]:
             self.rect.x += 3 # -- move the sprite 3 pixels to the right
+
+        self.gravity()
     # - END Update method
+
+    # - Gravity method
+    def gravity(self):
+        # -- if player_on_platform is set to False,
+        if self.player_on_platform != False:
+            self.rect.y = self.rect.y + 3 # -- add 3 pixels to the y-direction
+    # - END Gravity method
 # - END CLASS
 
 # - Platform CLASS
@@ -49,12 +59,26 @@ class Platform(pygame.sprite.Sprite):
     # - END Constructor method
 # - END CLASS
 
+# - collision FUNCTION
+def collision(group_one, group_two):
+    hit = pygame.sprite.spritecollide(group_one, group_two, False) # -- check whether group_one and group_two collided
+    # -- the two groups collide, do this:
+    if hit:
+        print("hit") # -- print "hit" in the console
+        return True # -- return True
+    else:
+        return False # -- return False if the two groups are not colliding
+# - END FUNCTION
+
 player = Player() # -- create an instance of the Player class
+
 platform = Platform() # -- create an instance of the Platform class
+platforms_group = pygame.sprite.Group() # -- create a platforms group
+platforms_group.add(platform) # -- add the instance of Platform class to the platform_group
 
 all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
 all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
-all_sprites_group.add(platform) # -- add the platform sprite into all_sprites_group
+all_sprites_group.add(platforms_group) # -- add the platform_group into all_sprites_group
 
 # - MAIN WHILE LOOP
 # -- this is where the game is being executed
@@ -72,6 +96,8 @@ while running:
 
     all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
     all_sprites_group.update() # -- Run the Update method on all_sprites_group
+
+    collision(player, platforms_group)
 
     pygame.display.flip() # -- Flip the display
     pygame.time.Clock().tick(60) # -- set the number of frames per second to 60
