@@ -72,7 +72,7 @@ def collision(group_one, group_two):
 
 # - collisionCoordinates FUNCTION
 def collisionCoordinates(group_one, group_two):
-    return pygame.sprite.spritecollide(group_one, group_two, False)[0].rect # -- return the spritecollide object
+    return pygame.sprite.spritecollide(group_one, group_two, False) # -- return the spritecollide object
 # - END FUNCTION
 
 player = Player() # -- create an instance of the Player class
@@ -105,7 +105,7 @@ while running:
     # -- If the player and platforms_group collide,
     if collision(player, platforms_group) == True:
         player.player_on_platform = True # -- Set the player_on_platform to True
-        player.rect.bottom = collisionCoordinates(player, platforms_group)[1] # -- set the bottom y-value of player to the top y-value of the platform
+        player.rect.bottom = collisionCoordinates(player, platforms_group)[0].rect.top # -- set the bottom y-value of player to the top y-value of the platform
     else:
         player.player_on_platform = False # -- Set the player_on_platform to False
     # -- END IF
