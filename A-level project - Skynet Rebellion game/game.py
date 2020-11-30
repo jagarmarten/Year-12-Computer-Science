@@ -103,7 +103,7 @@ while running:
     else:
         player.player_on_platform = False # -- Set the player_on_platform to True
     # -- END IF
-    
+
     pygame.display.flip() # -- Flip the display
     pygame.time.Clock().tick(60) # -- set the number of frames per second to 60
 # - END WHILE
