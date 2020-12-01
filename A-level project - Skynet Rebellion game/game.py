@@ -34,6 +34,10 @@ class Player(pygame.sprite.Sprite):
         if key_pressed[pygame.K_RIGHT]:
             self.rect.x += 3 # -- move the sprite 3 pixels to the right
 
+        # -- if the spacebar was pressed,
+        if key_pressed[pygame.K_SPACE]:
+            self.jump()
+
         self.gravity()
     # - END Update method
 
@@ -43,6 +47,12 @@ class Player(pygame.sprite.Sprite):
         if self.player_on_platform == False:
             self.rect.y = self.rect.y + 3 # -- add 3 pixels to the y-direction
     # - END Gravity method
+
+    # - Jump method
+    def jump(self):
+        if self.player_on_platform == True:
+            self.rect.y -= 100
+    # - END Jump method
 # - END CLASS
 
 # - Platform CLASS
