@@ -36,9 +36,9 @@ class Player(pygame.sprite.Sprite):
 
         # -- if the spacebar was pressed,
         if key_pressed[pygame.K_SPACE]:
-            self.jump()
+            self.jump() # -- call the jump() method
 
-        self.gravity()
+        self.gravity() # -- call the gravity() method
     # - END Update method
 
     # - Gravity method
@@ -50,8 +50,9 @@ class Player(pygame.sprite.Sprite):
 
     # - Jump method
     def jump(self):
+        # -- check whether the player is on the platform,
         if self.player_on_platform == True:
-            self.rect.y -= 100
+            self.rect.y -= 100 # -- move the player sprite 100 pixels upwards
     # - END Jump method
 # - END CLASS
 
@@ -79,6 +80,9 @@ def collision(group_one, group_two):
     else:
         return False # -- return False if the two groups are not colliding
 # - END FUNCTION
+
+# - platforms_map array
+# - END of platforms_map array
 
 # - collisionCoordinates FUNCTION
 def collisionCoordinates(group_one, group_two):
