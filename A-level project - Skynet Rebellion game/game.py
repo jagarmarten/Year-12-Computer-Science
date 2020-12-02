@@ -68,6 +68,19 @@ class Platform(pygame.sprite.Sprite):
         self.rect.x = x_coord # -- set the x coordinate
         self.rect.y = y_coord # -- set the y coordinate
     # - END Constructor method
+
+    # - Update method
+    def update(self):
+        key_pressed = pygame.key.get_pressed() # -- check if a key was pressed
+        
+        # -- if the left arrow key was pressed,
+        if key_pressed[pygame.K_LEFT]:
+            self.rect.x += 3 # -- move the sprite 3 pixels to the left
+        
+        # -- if the right arrow key was pressed,
+        if key_pressed[pygame.K_RIGHT]:
+            self.rect.x -= 3 # -- move the sprite 3 pixels to the right
+    # - END Update method
 # - END CLASS
 
 # - collision FUNCTION
@@ -87,7 +100,7 @@ def collisionCoordinates(group_one, group_two):
 # - END FUNCTION
 
 # - platforms array
-# -- width, height, x and y-coordinates fo the platform
+# -- width, height, x and y-coordinates of the platform
 platforms = [
     [300, 30, 200, 350],
     [300, 30, 100, 250],
