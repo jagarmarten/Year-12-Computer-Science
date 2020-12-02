@@ -57,16 +57,16 @@ class Player(pygame.sprite.Sprite):
 # - END CLASS
 
 # - Platform CLASS
-# -- attributes: 
+# -- attributes: width, height, x_coord, y_coord
 class Platform(pygame.sprite.Sprite):
     # - Constructor method
-    def __init__(self):
+    def __init__(self, width, height, x_coord, y_coord):
         super().__init__() # -- calling the methods of the superclass
-        self.image = pygame.Surface([300, 30]) # -- create a new surface - 50 by 100px
+        self.image = pygame.Surface([width, height]) # -- create a new surface - width by height pixels (depends on the parameters passed)
         self.image.fill((0,128,0)) # -- fill the surface with white colour
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
-        self.rect.x = 200 # -- set the x coordinate
-        self.rect.y = 350 # -- set the y coordinate
+        self.rect.x = x_coord # -- set the x coordinate
+        self.rect.y = y_coord # -- set the y coordinate
     # - END Constructor method
 # - END CLASS
 
@@ -81,19 +81,36 @@ def collision(group_one, group_two):
         return False # -- return False if the two groups are not colliding
 # - END FUNCTION
 
-# - platforms_map array
-# - END of platforms_map array
-
 # - collisionCoordinates FUNCTION
 def collisionCoordinates(group_one, group_two):
     return pygame.sprite.spritecollide(group_one, group_two, False) # -- return the spritecollide object
 # - END FUNCTION
 
+# - platforms array
+# -- width, height, x and y-coordinates fo the platform
+platforms = [
+    [300, 30, 200, 350],
+    [300, 30, 100, 250],
+    [300, 30, 400, 550]
+]
+# - END platforms array
+
 player = Player() # -- create an instance of the Player class
 
-platform = Platform() # -- create an instance of the Platform class
 platforms_group = pygame.sprite.Group() # -- create a platforms group
-platforms_group.add(platform) # -- add the instance of Platform class to the platform_group
+platform_one = Platform(300, 30, 200, 350) # -- platform 1
+platform_two = Platform(300, 30, 100, 250) # -- platform 2
+platform_three = Platform(300, 30, 400, 550) # -- platform 3
+platforms_group.add(platform_one) # -- add platform 1 to the platforms_group
+platforms_group.add(platform_two) # -- add platform 2 to the platforms_group
+platforms_group.add(platform_three) # -- add platform 3 to the platforms_group
+
+# - platforms for loop
+# -- this for loop is responsible for creating platform instances from an array
+#for platform in platforms:
+#    platform_sprite = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the platforms array
+#    platforms_group.add(platform_sprite) # -- add the instance of Platform class (platform_sprite) to the platform_group
+# - END platforms for loop
 
 all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
 all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
