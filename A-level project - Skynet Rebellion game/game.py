@@ -98,18 +98,12 @@ platforms = [
 player = Player() # -- create an instance of the Player class
 
 platforms_group = pygame.sprite.Group() # -- create a platforms group
-platform_one = Platform(300, 30, 200, 350) # -- platform 1
-platform_two = Platform(300, 30, 100, 250) # -- platform 2
-platform_three = Platform(300, 30, 400, 550) # -- platform 3
-platforms_group.add(platform_one) # -- add platform 1 to the platforms_group
-platforms_group.add(platform_two) # -- add platform 2 to the platforms_group
-platforms_group.add(platform_three) # -- add platform 3 to the platforms_group
 
 # - platforms for loop
 # -- this for loop is responsible for creating platform instances from an array
-#for platform in platforms:
-#    platform_sprite = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the platforms array
-#    platforms_group.add(platform_sprite) # -- add the instance of Platform class (platform_sprite) to the platform_group
+for platform in platforms:
+    platform_sprite = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the platforms array
+    platforms_group.add(platform_sprite) # -- add the instance of Platform class (platform_sprite) to the platform_group
 # - END platforms for loop
 
 all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
