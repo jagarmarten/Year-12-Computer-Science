@@ -88,7 +88,6 @@ def collision(group_one, group_two):
     hit = pygame.sprite.spritecollide(group_one, group_two, False) # -- check whether group_one and group_two collided
     # -- the two groups collide, do this:
     if hit:
-        print("hit") # -- print "hit" in the console
         return True # -- return True
     else:
         return False # -- return False if the two groups are not colliding
@@ -125,6 +124,9 @@ for platform in platforms:
 all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
 all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
 all_sprites_group.add(platforms_group) # -- add the platform_group into all_sprites_group
+
+width, height = pygame.display.get_surface().get_size() # -- get the width and height of the surface
+print("Width: " + str(width) + ", height: " + str(height)) # -- print out the width and height of the surface
 
 # - MAIN WHILE LOOP
 # -- this is where the game is being executed
