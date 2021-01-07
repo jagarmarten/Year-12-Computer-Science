@@ -8,6 +8,7 @@ screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolut
 
 running = True # -- variable 'running' is used to stop the game if the user closes the window
 
+
 FPS = 60 # -- frames per second
 fpsClock = pygame.time.Clock() # -- initialize the pygame.time.Clock() object
 
@@ -128,11 +129,6 @@ all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
 all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
 all_sprites_group.add(platforms_group) # -- add the platform_group into all_sprites_group
 
-# -- get the width and height of the surface
-width, height = pygame.display.get_surface().get_size()
-# -- print out the width and height of the surface
-print("Width: " + str(width) + ", height: " + str(height))
-
 # - MAIN WHILE LOOP
 # -- this is where the game is being executed
 while running:
@@ -160,7 +156,6 @@ while running:
 
     pygame.display.update() # -- update the display
     fpsClock.tick(FPS) # -- set the display to 60fps
-    print("FPS: " + str(fpsClock.get_fps())) # -- print the number of FPS
     
 # - END WHILE
 
