@@ -129,34 +129,61 @@ all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
 all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
 all_sprites_group.add(platforms_group) # -- add the platform_group into all_sprites_group
 
-# - MAIN WHILE LOOP
-# -- this is where the game is being executed
-while running:
-    
-    # - FOR loop which listens to events
-    for event in pygame.event.get():
-        # -- if user quits the game
-        if event.type == pygame.QUIT:
-            running = False # -- set the variable running to False
-        # - END IF
-    # - END FOR
+# - MAIN MENU FUNCTION
+def main_menu():
+    running = True # - variable running set to true
+    # - main_menu() while loop
+    while running:
+        screen.fill((0, 0, 255)) # -- fill the screen with blue colour
+        
+        # - FOR loop which listens to events
+        for event in pygame.event.get():
+            # -- if user quits the game
+            if event.type == pygame.QUIT:
+                running = False # -- set the variable running to False
+            # - END IF
+        # - END FOR
 
-    screen.fill((0, 0, 0)) # -- fill the screen with white colour
+        pygame.display.update() # -- update the display
+        fpsClock.tick(FPS) # -- set the display to 60fps
 
-    all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
-    all_sprites_group.update() # -- Run the Update method on all_sprites_group
+        print("Main menu")
+# - END FUNCTION
 
-    # -- If the player and platforms_group collide,
-    if collision(player, platforms_group) == True:
-        player.player_on_platform = True # -- Set the player_on_platform to True
-        player.rect.bottom = collisionCoordinates(player, platforms_group)[0].rect.top # -- set the bottom y-value of player to the top y-value of the platform
-    else:
-        player.player_on_platform = False # -- Set the player_on_platform to False
-    # -- END IF
+# - GAME FUNCTION
+def game():
+    running = True # - variable running set to true
+    # - game() while loop
+    while running:
+        
+        # - FOR loop which listens to events
+        for event in pygame.event.get():
+            # -- if user quits the game
+            if event.type == pygame.QUIT:
+                running = False # -- set the variable running to False
+            # - END IF
+        # - END FOR
 
-    pygame.display.update() # -- update the display
-    fpsClock.tick(FPS) # -- set the display to 60fps
-    
-# - END WHILE
+        screen.fill((0, 0, 0)) # -- fill the screen with black colour
 
-pygame.quit() # - Exit the game
+        all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
+        all_sprites_group.update() # -- Run the Update method on all_sprites_group
+
+        # -- If the player and platforms_group collide,
+        if collision(player, platforms_group) == True:
+            player.player_on_platform = True # -- Set the player_on_platform to True
+            player.rect.bottom = collisionCoordinates(player, platforms_group)[0].rect.top # -- set the bottom y-value of player to the top y-value of the platform
+        else:
+            player.player_on_platform = False # -- Set the player_on_platform to False
+        # -- END IF
+
+        pygame.display.update() # -- update the display
+        fpsClock.tick(FPS) # -- set the display to 60fps
+        
+        print("Game")
+        
+    # - END WHILE
+    pygame.quit() # - Exit the game
+# - END FUNCTION
+
+main_menu() # -- calling the main_menu function, so that it's the first executed
