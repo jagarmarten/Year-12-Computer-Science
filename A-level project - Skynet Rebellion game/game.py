@@ -6,11 +6,10 @@ pygame.init()  # -- initialize the pygame library
 pygame.display.set_caption('Skynet Rebellion') # -- set the name of the window to 'Skynet Rebellion'
 screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolution of 800 by 600
 
-running = True # -- variable 'running' is used to stop the game if the user closes the window
-
-
 FPS = 60 # -- frames per second
 fpsClock = pygame.time.Clock() # -- initialize the pygame.time.Clock() object
+
+font = pygame.font.SysFont('Arial', 70) # -- import the font Arial from the system and set it to size 20
 
 # - PLAYER CLASS
 # -- attributes: 
@@ -134,8 +133,6 @@ def main_menu():
     running = True # - variable running set to true
     # - main_menu() while loop
     while running:
-        screen.fill((0, 0, 255)) # -- fill the screen with blue colour
-        
         # - FOR loop which listens to events
         for event in pygame.event.get():
             # -- if user quits the game
@@ -144,10 +141,12 @@ def main_menu():
             # - END IF
         # - END FOR
 
+        screen.fill((0, 0, 255)) # -- fill the screen with blue colour
+        mainMenuText = font.render('SKYNET REBELLION', False, (0,0,0)) # -- render a "SKYNET REBELLION" text on the screen with a black colour
+        screen.blit(mainMenuText,(50,100)) # -- display the text at coordinates x=50, y=100
+
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
-
-        print("Main menu") # -- print "Main menu" if the main_menu() function is being executed
 # - END FUNCTION
 
 # - GAME FUNCTION
