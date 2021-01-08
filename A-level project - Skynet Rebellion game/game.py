@@ -128,6 +128,15 @@ all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
 all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
 all_sprites_group.add(platforms_group) # -- add the platform_group into all_sprites_group
 
+# - DRAW TEXT FUNCTION
+# -- parameters: text, font, colour, surface, x-coord and y-coord
+def draw_text(text, font, colour, surface, x_coord, y_coord):
+    textToDisplay = font.render(text, False, colour) # -- render a text with a colour
+    textToDisplayRectObj = textToDisplay.get_rect() # -- get the rect object of the text
+    textToDisplayRectObj.topleft = (x_coord, y_coord) # -- set the top left values to x-coord and y-coord
+    surface.blit(textToDisplay, textToDisplayRectObj) # -- display the text on the screen
+# - END FUNCTION
+
 # - MAIN MENU FUNCTION
 def main_menu():
     running = True # - variable running set to true
@@ -142,8 +151,10 @@ def main_menu():
         # - END FOR
 
         screen.fill((0, 0, 255)) # -- fill the screen with blue colour
-        mainMenuText = font.render('SKYNET REBELLION', False, (0,0,0)) # -- render a "SKYNET REBELLION" text on the screen with a black colour
-        screen.blit(mainMenuText,(50,100)) # -- display the text at coordinates x=50, y=100
+        #mainMenuText = font.render('SKYNET REBELLION', False, (0,0,0)) # -- render a "SKYNET REBELLION" text on the screen with a black colour
+        #screen.blit(mainMenuText,(50,100)) # -- display the text at coordinates x=50, y=100
+
+        draw_text('SKYNET REBELLION', font, (0,0,0), screen, 50, 100)
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
