@@ -146,6 +146,7 @@ def mouse_position():
 # - MAIN MENU FUNCTION
 def main_menu():
     running = True # - variable running set to true
+    click = False # -- set click to False
     # - main_menu() while loop
     while running:
         # - FOR loop which listens to events
@@ -154,21 +155,30 @@ def main_menu():
             if event.type == pygame.QUIT:
                 running = False # -- set the variable running to False
             # - END IF
+            # -- if he user clicks with the mouse
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # -- if it's a left click
+                if event.button == 1:
+                    click = True # -- set the variable click to true
         # - END FOR
 
         screen.fill((0, 0, 255)) # -- fill the screen with blue colour
-
-        mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
-        print(mouse_x, mouse_y) # -- print out the values
-
+ 
         mainMenuPlayButton = pygame.Rect(0, 0, 400, 50) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
         mainMenuPlayButton.center = (400, 370) # -- set the center coordinates to x=400, y=370
         pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
+        
+        mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
+        print(mouse_x, mouse_y) # -- print out the values
+
+        # -- if the mouse_x and mouse_y collides with the mainMenuPlayButton
+        if mainMenuPlayButton.collidepoint((mouse_x, mouse_y)):
+            # -- if the user clicks on the button
+            if click:
+                game() # -- run the game function
 
         draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
         draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
-
-        
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
