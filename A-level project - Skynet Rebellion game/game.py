@@ -9,7 +9,8 @@ screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolut
 FPS = 60 # -- frames per second
 fpsClock = pygame.time.Clock() # -- initialize the pygame.time.Clock() object
 
-font = pygame.font.SysFont('Arial', 70) # -- import the font Arial from the system and set it to size 20
+fontOne = pygame.font.SysFont('arial', 70) # -- import the font arial from the system and set it to size 70
+fontTwo = pygame.font.SysFont('arial', 25) # -- import the font arial from the system and set it to size 25
 
 # - PLAYER CLASS
 # -- attributes: 
@@ -153,7 +154,14 @@ def main_menu():
 
         screen.fill((0, 0, 255)) # -- fill the screen with blue colour
 
-        draw_text('SKYNET REBELLION', font, (0,0,0), screen, 400, 300) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        mainMenuPlayButton = pygame.Rect(0, 0, 400, 50) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
+        mainMenuPlayButton.center = (400, 370) # -- set the center coordinates to x=400, y=370
+        pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
+
+        draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+
+        print(pygame.font.get_fonts())
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
