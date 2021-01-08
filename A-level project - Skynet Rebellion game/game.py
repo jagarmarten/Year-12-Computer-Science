@@ -134,7 +134,7 @@ def draw_text(text, font, colour, surface, x_coord, y_coord):
     print("draw_text() function used") # -- print that the draw_text() function has been used
     textToDisplay = font.render(text, False, colour) # -- render a text with a colour
     textToDisplayRectObj = textToDisplay.get_rect() # -- get the rect object of the text
-    textToDisplayRectObj.topleft = (x_coord, y_coord) # -- set the top left values to x-coord and y-coord
+    textToDisplayRectObj.center = (x_coord, y_coord) # -- set the top left values to x-coord and y-coord
     surface.blit(textToDisplay, textToDisplayRectObj) # -- display the text on the screen
 # - END FUNCTION
 
@@ -153,7 +153,7 @@ def main_menu():
 
         screen.fill((0, 0, 255)) # -- fill the screen with blue colour
 
-        draw_text('SKYNET REBELLION', font, (0,0,0), screen, 100, 300) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        draw_text('SKYNET REBELLION', font, (0,0,0), screen, 400, 300) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
