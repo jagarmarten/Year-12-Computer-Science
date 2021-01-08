@@ -9,8 +9,8 @@ screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolut
 FPS = 60 # -- frames per second
 fpsClock = pygame.time.Clock() # -- initialize the pygame.time.Clock() object
 
-fontOne = pygame.font.SysFont('arial', 70) # -- import the font arial from the system and set it to size 70
-fontTwo = pygame.font.SysFont('arial', 25) # -- import the font arial from the system and set it to size 25
+fontOne = pygame.font.SysFont('teko.ttf', 90) # -- import the font Teko from the system and set it to size 70
+fontTwo = pygame.font.SysFont('teko.ttf', 30) # -- import the font Teko from the system and set it to size 25
 
 # - PLAYER CLASS
 # -- attributes: 
@@ -132,11 +132,15 @@ all_sprites_group.add(platforms_group) # -- add the platform_group into all_spri
 # - DRAW TEXT FUNCTION
 # -- parameters: text, font, colour, surface, x-coord and y-coord
 def draw_text(text, font, colour, surface, x_coord, y_coord):
-    print("draw_text() function used") # -- print that the draw_text() function has been used
     textToDisplay = font.render(text, False, colour) # -- render a text with a colour
     textToDisplayRectObj = textToDisplay.get_rect() # -- get the rect object of the text
     textToDisplayRectObj.center = (x_coord, y_coord) # -- set the top left values to x-coord and y-coord
     surface.blit(textToDisplay, textToDisplayRectObj) # -- display the text on the screen
+# - END FUNCTION
+
+# - MOUSE POSITION FUNCTION
+def mouse_position():
+    return pygame.mouse.get_pos() # -- return the position of the mouse
 # - END FUNCTION
 
 # - MAIN MENU FUNCTION
@@ -154,6 +158,9 @@ def main_menu():
 
         screen.fill((0, 0, 255)) # -- fill the screen with blue colour
 
+        mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
+        print(mouse_x, mouse_y) # -- print out the values
+
         mainMenuPlayButton = pygame.Rect(0, 0, 400, 50) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
         mainMenuPlayButton.center = (400, 370) # -- set the center coordinates to x=400, y=370
         pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
@@ -161,7 +168,7 @@ def main_menu():
         draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
         draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
-        print(pygame.font.get_fonts())
+        
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
