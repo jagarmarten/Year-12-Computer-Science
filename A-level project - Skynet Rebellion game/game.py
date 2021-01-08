@@ -147,7 +147,7 @@ def main_menu():
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
 
-        print("Main menu")
+        print("Main menu") # -- print "Main menu" if the main_menu() function is being executed
 # - END FUNCTION
 
 # - GAME FUNCTION
@@ -180,7 +180,7 @@ def game():
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
         
-        print("Game")
+        print("Game")  # -- print "Game" if the game() function is being executed
         
     # - END WHILE
     pygame.quit() # - Exit the game
