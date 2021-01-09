@@ -163,29 +163,39 @@ def main_menu():
             # -- if the user clicks on the button
             if click:
                 game() # -- run the game function
-        
+        # - END IF
+
         pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
         draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
         click = False # -- set click to False
+
+        pygame.display.update() # -- update the display
         # - FOR loop which listens to events
         for event in pygame.event.get():
             # -- if user quits the game
             if event.type == pygame.QUIT:
-                running = False
-                pygame.quit()
-                #sys.exit()
+                running = False # -- set running to false
+                pygame.quit() # -- quit pygame
             # - END IF
+
+            # -- if a key is pressed
+            if event.type == pygame.KEYDOWN:
+                # -- if an escape key is pressed
+                if event.key == pygame.K_ESCAPE:
+                    running = False # -- set running to false
+                    pygame.quit() # -- quit pygame
+            # - END IF
+
             # -- if he user clicks with the mouse
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # -- if it's a left click
                 if event.button == 1:
                     click = True # -- set the variable click to true
-        pygame.display.update() # -- update the display
-        fpsClock.tick(FPS) # -- set the display to 60fps
+            # - END IF
         # - END FOR
+    pygame.quit() # -- quit the game
 # - END FUNCTION
-
 
 # - GAME FUNCTION
 def game():
@@ -197,6 +207,13 @@ def game():
             # -- if user quits the game
             if event.type == pygame.QUIT:
                 running = False # -- set the variable running to False
+            # - END IF
+
+            # -- if a key is pressed
+            if event.type == pygame.KEYDOWN:
+                # -- if an escape key is pressed
+                if event.key == pygame.K_ESCAPE:
+                    running = False # -- set running to false
             # - END IF
         # - END FOR
 
