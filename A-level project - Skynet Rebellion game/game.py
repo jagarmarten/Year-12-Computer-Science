@@ -144,46 +144,48 @@ def mouse_position():
     return pygame.mouse.get_pos() # -- return the position of the mouse
 # - END FUNCTION
 
+click = False
 # - MAIN MENU FUNCTION
 def main_menu():
-    running = True # - variable running set to true
-    click = False # -- set click to False
-    # - main_menu() while loop
+    running = True
     while running:
-        # - FOR loop which listens to events
-        for event in pygame.event.get():
-            # -- if user quits the game
-            if event.type == QUIT:
-                running = False # -- set the variable running to False
-            # - END IF
-            # -- if he user clicks with the mouse
-            if event.type == MOUSEBUTTONDOWN:
-                # -- if it's a left click
-                if event.button == 1:
-                    click = True # -- set the variable click to true
-        # - END FOR
-
         screen.fill((0, 0, 255)) # -- fill the screen with blue colour
- 
+        
+        draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+
+        mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
+
         mainMenuPlayButton = pygame.Rect(0, 0, 400, 50) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
         mainMenuPlayButton.center = (400, 370) # -- set the center coordinates to x=400, y=370
-        pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
-        
-        mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
 
         # -- if the mouse_x and mouse_y collides with the mainMenuPlayButton
         if mainMenuPlayButton.collidepoint((mouse_x, mouse_y)):
             # -- if the user clicks on the button
             if click:
-                running = False # -- stopping the main menu
                 game() # -- run the game function
-
-        draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        
+        pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
         draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
+        click = False # -- set click to False
+        # - FOR loop which listens to events
+        for event in pygame.event.get():
+            # -- if user quits the game
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                #sys.exit()
+            # - END IF
+            # -- if he user clicks with the mouse
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # -- if it's a left click
+                if event.button == 1:
+                    click = True # -- set the variable click to true
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
+        # - END FOR
 # - END FUNCTION
+
 
 # - GAME FUNCTION
 def game():
@@ -193,9 +195,8 @@ def game():
         # - FOR loop which listens to events
         for event in pygame.event.get():
             # -- if user quits the game
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 running = False # -- set the variable running to False
-                #pygame.quit()
             # - END IF
         # - END FOR
 
@@ -214,9 +215,8 @@ def game():
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
-        
     # - END WHILE
-    #pygame.quit() # - Exit the game
+    pygame.quit() # -- quit the game
 # - END FUNCTION
 
 main_menu() # -- calling the main_menu function, so that it's the first executed
