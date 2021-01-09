@@ -2,6 +2,7 @@
 import pygame  # -- import the pygame library
 from pygame.locals import * # -- pygame.locals is a module that contains various pygame constants
 pygame.init()  # -- initialize the pygame library
+pygame.font.init() # -- initialize the font module
 
 pygame.display.set_caption('Skynet Rebellion') # -- set the name of the window to 'Skynet Rebellion'
 screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolution of 800 by 600
@@ -9,8 +10,8 @@ screen = pygame.display.set_mode([800, 600]) # -- create a screen with a resolut
 FPS = 60 # -- frames per second
 fpsClock = pygame.time.Clock() # -- initialize the pygame.time.Clock() object
 
-fontOne = pygame.font.SysFont('teko.ttf', 90) # -- import the font Teko from the system and set it to size 70
-fontTwo = pygame.font.SysFont('teko.ttf', 30) # -- import the font Teko from the system and set it to size 25
+fontOne = pygame.font.Font('teko.ttf', 90) # -- import the font Teko from the system and set it to size 70
+fontTwo = pygame.font.Font('teko.ttf', 30) # -- import the font Teko from the system and set it to size 25
 
 # - PLAYER CLASS
 # -- attributes: 
@@ -152,11 +153,11 @@ def main_menu():
         # - FOR loop which listens to events
         for event in pygame.event.get():
             # -- if user quits the game
-            if event.type == pygame.QUIT:
+            if event.type == QUIT:
                 running = False # -- set the variable running to False
             # - END IF
             # -- if he user clicks with the mouse
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == MOUSEBUTTONDOWN:
                 # -- if it's a left click
                 if event.button == 1:
                     click = True # -- set the variable click to true
@@ -169,12 +170,12 @@ def main_menu():
         pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
         
         mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
-        print(mouse_x, mouse_y) # -- print out the values
 
         # -- if the mouse_x and mouse_y collides with the mainMenuPlayButton
         if mainMenuPlayButton.collidepoint((mouse_x, mouse_y)):
             # -- if the user clicks on the button
             if click:
+                running = False # -- stopping the main menu
                 game() # -- run the game function
 
         draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
@@ -189,12 +190,12 @@ def game():
     running = True # - variable running set to true
     # - game() while loop
     while running:
-        
         # - FOR loop which listens to events
         for event in pygame.event.get():
             # -- if user quits the game
-            if event.type == pygame.QUIT:
+            if event.type == QUIT:
                 running = False # -- set the variable running to False
+                #pygame.quit()
             # - END IF
         # - END FOR
 
@@ -214,10 +215,8 @@ def game():
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
         
-        print("Game")  # -- print "Game" if the game() function is being executed
-        
     # - END WHILE
-    pygame.quit() # - Exit the game
+    #pygame.quit() # - Exit the game
 # - END FUNCTION
 
 main_menu() # -- calling the main_menu function, so that it's the first executed
