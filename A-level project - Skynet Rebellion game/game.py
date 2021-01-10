@@ -202,6 +202,25 @@ def pause():
     paused = True # -- set paused to True
     # -- while paused is set to True:
     while paused:
+        screen.fill((255, 255, 255)) # -- fill the screen with black colour
+        mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
+
+        unpauseButton = pygame.Rect(0, 0, 400, 50) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
+        unpauseButton.center = (400, 370) # -- set the center coordinates to x=400, y=370
+
+        # -- if the mouse_x and mouse_y collides with the unpauseButton
+        if unpauseButton.collidepoint((mouse_x, mouse_y)):
+            # -- if the user clicks on the button
+            if click:
+                paused = False # -- set paused to False
+            # - END IF
+        # - END IF
+
+        pygame.draw.rect(screen, (255, 0, 0), unpauseButton) # -- draw the rect object on the screen
+        draw_text('RESUME GAME', fontTwo, (0,0,0), screen, 400, 370) # -- render a "RESUME GAME" text on the screen with a black colour, and coordinates x=400 y=370
+
+        click = False # -- set click to False
+        pygame.display.update() # -- update the display
         for event in pygame.event.get():
             # -- if user quits the game
             if event.type == pygame.QUIT:
@@ -222,8 +241,18 @@ def pause():
                     paused = False # -- set paused to False
                 # - END IF
             # - END IF
+
+            # -- if he user clicks with the mouse
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # -- if it's a left click
+                if event.button == 1:
+                    click = True # -- set the variable click to true
+                # -- END IF
+            # - END IF
         # - END FOR
-        screen.fill((255, 255, 255)) # -- fill the screen with black colour
+
+        draw_text('GAME PAUSED', fontOne, (0,0,0), screen, 400, 270) # -- render a "GAME PAUSED" text on the screen
+
         pygame.display.update() # -- update the display
         fpsClock.tick(5) # -- set the display to 5fps
     # - END WHILE
@@ -246,6 +275,7 @@ def game():
         if pauseButton.collidepoint((mouse_x, mouse_y)):
             # -- if the user clicks on the button
             if click:
+                print("Pause")
                 pause() # -- run the pause() function
             # - END IF
         # - END IF
