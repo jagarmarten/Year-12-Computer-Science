@@ -284,7 +284,7 @@ def game():
         # - END IF
 
         pygame.draw.rect(screen, (255, 0, 0), pauseButton) # -- draw the rect object on the screen
-        draw_text('| |', fontTwo, (255,255,255), screen, 800, 0, True) # -- render a "| |" text on the screen
+        draw_text('| |', fontTwo, (255,255,255), screen, 780, 10, True) # -- render a "| |" text on the screen
 
         click = False # -- set click to False
         # - FOR loop which listens to events
