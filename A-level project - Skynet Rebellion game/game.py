@@ -200,8 +200,26 @@ def main_menu():
 # - GAME FUNCTION
 def game():
     running = True # - variable running set to true
+    click = False
     # - game() while loop
     while running:
+        screen.fill((0, 0, 0)) # -- fill the screen with black colour
+        mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
+
+        pauseButton = pygame.Rect(0, 0, 40, 40) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
+        pauseButton.topright = (790, 10) # -- set the center coordinates to x=400, y=370
+
+        # -- if the mouse_x and mouse_y collides with the pauseButton
+        if pauseButton.collidepoint((mouse_x, mouse_y)):
+            # -- if the user clicks on the button
+            if click:
+                print("Pause")
+        # - END IF
+
+        pygame.draw.rect(screen, (255, 0, 0), pauseButton) # -- draw the rect object on the screen
+        #draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+
+        click = False # -- set click to False
         # - FOR loop which listens to events
         for event in pygame.event.get():
             # -- if user quits the game
@@ -215,9 +233,14 @@ def game():
                 if event.key == pygame.K_ESCAPE:
                     running = False # -- set running to false
             # - END IF
-        # - END FOR
 
-        screen.fill((0, 0, 0)) # -- fill the screen with black colour
+            # -- if he user clicks with the mouse
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # -- if it's a left click
+                if event.button == 1:
+                    click = True # -- set the variable click to true
+            # - END IF
+        # - END FOR
 
         all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
         all_sprites_group.update() # -- Run the Update method on all_sprites_group
