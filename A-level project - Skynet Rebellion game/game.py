@@ -197,12 +197,45 @@ def main_menu():
     pygame.quit() # -- quit the game
 # - END FUNCTION
 
+# - PAUSE FUNCTION
+def pause():
+    paused = True # -- set paused to True
+    # -- while paused is set to True:
+    while paused:
+        for event in pygame.event.get():
+            # -- if user quits the game
+            if event.type == pygame.QUIT:
+                pygame.quit() # -- quit the game
+                quit() # -- quit the program
+            # - END IF
+
+            # -- if a key is pressed
+            if event.type == pygame.KEYDOWN:
+                # -- if an escape key is pressed
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit() # -- quit the game
+                    quit() # -- quit the program
+                # - END IF
+
+                # -- if an c key is pressed
+                if event.key == pygame.K_c:
+                    paused = False # -- set paused to False
+                # - END IF
+            # - END IF
+        # - END FOR
+        screen.fill((255, 255, 255)) # -- fill the screen with black colour
+        pygame.display.update() # -- update the display
+        fpsClock.tick(5) # -- set the display to 5fps
+    # - END WHILE
+# - END FUNCTION
+
 # - GAME FUNCTION
 def game():
     running = True # - variable running set to true
     click = False
     # - game() while loop
     while running:
+        
         screen.fill((0, 0, 0)) # -- fill the screen with black colour
         mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
 
@@ -213,7 +246,8 @@ def game():
         if pauseButton.collidepoint((mouse_x, mouse_y)):
             # -- if the user clicks on the button
             if click:
-                print("Pause")
+                pause() # -- run the pause() function
+            # - END IF
         # - END IF
 
         pygame.draw.rect(screen, (255, 0, 0), pauseButton) # -- draw the rect object on the screen
@@ -232,6 +266,7 @@ def game():
                 # -- if an escape key is pressed
                 if event.key == pygame.K_ESCAPE:
                     running = False # -- set running to false
+                # - END IF
             # - END IF
 
             # -- if he user clicks with the mouse
@@ -239,6 +274,7 @@ def game():
                 # -- if it's a left click
                 if event.button == 1:
                     click = True # -- set the variable click to true
+                # - END IF
             # - END IF
         # - END FOR
 
