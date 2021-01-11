@@ -131,16 +131,20 @@ all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
 all_sprites_group.add(platforms_group) # -- add the platform_group into all_sprites_group
 
 # - DRAW TEXT FUNCTION
-# -- parameters: text, font, colour, surface, x-coord and y-coord
-def draw_text(text, font, colour, surface, x_coord, y_coord, top_right):
+# -- parameters: text, font, colour, surface, x-coord and y-coord, coordinates_method
+def draw_text(text, font, colour, surface, x_coord, y_coord, coordinates_method):
     textToDisplay = font.render(text, False, colour) # -- render a text with a colour
     textToDisplayRectObj = textToDisplay.get_rect() # -- get the rect object of the text
-    # -- if top-right is set to True, then do this, else, do that
-    if top_right == True:
-        textToDisplayRectObj.topright = (x_coord, y_coord) # -- set the top right values to x-coord and y-coord
-    else:
+
+    # -- check for the coordinates method
+    if coordinates_method == "center":
         textToDisplayRectObj.center = (x_coord, y_coord) # -- set the center values to x-coord and y-coord
+    elif coordinates_method == "top-right":
+        textToDisplayRectObj.topright = (x_coord, y_coord) # -- set the top right values to x-coord and y-coord
+    elif coordinates_method == "top-left":
+        textToDisplayRectObj.topleft = (x_coord, y_coord) # -- set the center values to x-coord and y-coord
     # - END IF
+
     surface.blit(textToDisplay, textToDisplayRectObj) # -- display the text on the screen
 # - END FUNCTION
 
@@ -156,7 +160,7 @@ def main_menu():
     while running:
         screen.fill((0, 0, 255)) # -- fill the screen with blue colour
         
-        draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270, False) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270, "center") # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
         mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
 
@@ -171,7 +175,7 @@ def main_menu():
         # - END IF
 
         pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
-        draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370, False) # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370, "center") # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
         click = False # -- set click to False
 
@@ -222,7 +226,7 @@ def pause():
         # - END IF
 
         pygame.draw.rect(screen, (255, 0, 0), unpauseButton) # -- draw the rect object on the screen
-        draw_text('RESUME GAME', fontTwo, (0,0,0), screen, 400, 370, False) # -- render a "RESUME GAME" text on the screen with a black colour, and coordinates x=400 y=370
+        draw_text('RESUME GAME', fontTwo, (0,0,0), screen, 400, 370, "center") # -- render a "RESUME GAME" text on the screen with a black colour, and coordinates x=400 y=370
 
         click = False # -- set click to False
         pygame.display.update() # -- update the display
@@ -256,7 +260,7 @@ def pause():
             # - END IF
         # - END FOR
 
-        draw_text('GAME PAUSED', fontOne, (0,0,0), screen, 400, 270, False) # -- render a "GAME PAUSED" text on the screen
+        draw_text('GAME PAUSED', fontOne, (0,0,0), screen, 400, 270, "center") # -- render a "GAME PAUSED" text on the screen
 
         pygame.display.update() # -- update the display
         fpsClock.tick(5) # -- set the display to 5fps
@@ -265,8 +269,10 @@ def pause():
 
 # - GAME FUNCTION
 def game():
-    running = True # - variable running set to true
-    click = False
+    running = True # -- variable running set to true
+    click = False # -- set click to False
+    lives = 3 # -- set lives to 3
+    score = 0 # -- set score to 0
     # - game() while loop
     while running:
         screen.fill((0, 0, 0)) # -- fill the screen with black colour
@@ -284,7 +290,10 @@ def game():
         # - END IF
 
         pygame.draw.rect(screen, (255, 0, 0), pauseButton) # -- draw the rect object on the screen
-        draw_text('| |', fontTwo, (255,255,255), screen, 780, 10, True) # -- render a "| |" text on the screen
+        draw_text('| |', fontTwo, (255,255,255), screen, 780, 10, "top-right") # -- render a "| |" text on the screen
+
+        draw_text("Lives left: " + str(lives), fontTwo, (255,255,255), screen, 20, 10, "top-left") # -- render "Lives left: " text on the screen
+        draw_text("Score: " + str(score), fontTwo, (255,255,255), screen, 140, 10, "top-left") # -- render "Score" text on the screen
 
         click = False # -- set click to False
         # - FOR loop which listens to events
