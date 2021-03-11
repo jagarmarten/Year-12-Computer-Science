@@ -25,26 +25,31 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 250 # -- set the x coordinate
         self.rect.y = 100 # -- set the y coordinate
         self.player_on_platform = True # -- player standing on the platform
+
+        self.change_x = 0 # -- setting the speed vector of the player (x direction)
+        self.change_y = 0 # -- setting the speed vector of the player (y direction)
     # - END Constructor method
 
     # - Update method
     def update(self):
-        key_pressed = pygame.key.get_pressed() # -- check if a key was pressed
-        
-        # -- if the left arrow key was pressed,
-        if key_pressed[pygame.K_LEFT]:
-            self.rect.x -= 3 # -- move the sprite 3 pixels to the left
-        
-        # -- if the right arrow key was pressed,
-        if key_pressed[pygame.K_RIGHT]:
-            self.rect.x += 3 # -- move the sprite 3 pixels to the right
-
-        # -- if the spacebar was pressed,
-        if key_pressed[pygame.K_SPACE]:
-            self.jump() # -- call the jump() method
-
         self.gravity() # -- call the gravity() method
+        print(self.change_x, self.change_y) # -- print the values of the change_x and change_y variables
     # - END Update method
+
+    # - Move_left method
+    def move_left(self):
+        self.change_x = -3
+    # - END Move_left method
+ 
+    # - Move_right method
+    def move_right(self):
+        self.change_x = 3
+    # - Move_right method
+
+    # - stop method
+    def stop(self):
+        self.change_x = 0
+    # - END stop method
 
     # - Gravity method
     def gravity(self):
@@ -298,7 +303,7 @@ def game():
         click = False # -- set click to False
         # - FOR loop which listens to events
         for event in pygame.event.get():
-            # -- if user quits the game
+            # -- if the user quits the game
             if event.type == pygame.QUIT:
                 running = False # -- set the variable running to False
             # - END IF
@@ -308,7 +313,31 @@ def game():
                 # -- if an escape key is pressed
                 if event.key == pygame.K_ESCAPE:
                     running = False # -- set running to false
-                # - END IF
+                # -- END IF
+                # -- if the user holds the left key
+                if event.key == pygame.K_LEFT:
+                    player.move_left() # -- run the move_left() method
+                # -- END IF
+                # -- if the user holds the right key
+                if event.key == pygame.K_RIGHT:
+                    player.move_right() # -- run the move_right() method
+                # -- END IF
+                # -- if the user holds the up key
+                if event.key == pygame.K_UP:
+                    player.jump() # -- run the jump() method
+                # -- END IF
+            # - END IF
+
+            # - if the user stops holding a key
+            if event.type == pygame.KEYUP:
+                # -- if the user lets go of the left key, and the change_x is less than 0
+                if event.key == pygame.K_LEFT and player.change_x < 0:
+                    player.stop() # -- run the stop method
+                # -- END IF
+                # -- if the user lets go of the right key, and the change_y is greater than 0
+                if event.key == pygame.K_RIGHT and player.change_x > 0:
+                    player.stop() # -- run the stop method
+                # -- END IF
             # - END IF
 
             # -- if he user clicks with the mouse
