@@ -33,7 +33,6 @@ class Player(pygame.sprite.Sprite):
     # - Update method
     def update(self):
         self.gravity() # -- call the gravity() method
-        print(self.change_x, self.change_y) # -- print the values of the change_x and change_y variables
     # - END Update method
 
     # - Move_left method
@@ -58,7 +57,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = self.rect.y + 3 # -- add 3 pixels to the y-direction
     # - END Gravity method
 
-    # - Jump method
     def jump(self):
         # -- check whether the player is on the platform,
         if self.player_on_platform == True:
