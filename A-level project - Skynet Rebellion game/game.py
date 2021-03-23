@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255,255,255)) # -- fill the surface with white colour
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
         self.rect.x = 250 # -- set the x coordinate
-        self.rect.y = 100 # -- set the y coordinate
+        self.rect.y = 0 # -- set the y coordinate
         self.player_on_platform = True # -- player standing on the platform
 
         self.change_x = 0 # -- setting the speed vector of the player (x direction)
@@ -32,8 +32,44 @@ class Player(pygame.sprite.Sprite):
 
     # - Update method
     def update(self):
-        self.gravity() # -- call the gravity() method
+        self.gravity() # -- calculate the gravity
+        self.rect.x += self.change_x # -- move the player sprite to the left or right
+
+        block_hit_list = pygame.sprite.spritecollide(self, platforms_group, False) # -- see if we hit a platform
+        # -- loop through the block_hit_list
+        for block in block_hit_list:
+            # -- if the player sprite is moving to the right and hits an object
+            if self.change_x > 0:
+                self.rect.right = block.rect.left # -- set our right side to the left side of the item hit
+            elif self.change_x < 0:
+                self.rect.left = block.rect.right # -- set the left side to the right side of the item hit
+            # -- END IF
+        # -- END FOR
+
+        self.rect.y += self.change_y # -- move the player sprite up and down
+ 
+        block_hit_list = pygame.sprite.spritecollide(self, platforms_group, False) # -- see if we hit a platform
+        # -- loop through the block_hit_list
+        for block in block_hit_list:
+            # -- if the player sprite is moving downwards and hits an object
+            if self.change_y > 0:
+                self.rect.bottom = block.rect.top # -- set our bottom side to the top side of the item hit
+            elif self.change_y < 0:
+                self.rect.top = block.rect.bottom # -- set our top side to the bottom side of the item hit
+            # -- END IF
+            self.change_y = 0 # -- stop the vertical movement
+        # -- END for
     # - END Update method
+ 
+    # - Gravity method
+    def gravity(self):
+        # -- if the change_y value is 0:
+        if self.change_y == 0:
+            self.change_y = 1 # -- set change_y to 1
+        else:
+            self.change_y += 0.35 # -- otherwise add 0.35 to change_y
+        # -- END IF
+    # - END Gravity method
 
     # - Move_left method
     def move_left(self):
@@ -50,17 +86,10 @@ class Player(pygame.sprite.Sprite):
         self.change_x = 0
     # - END stop method
 
-    # - Gravity method
-    def gravity(self):
-        # -- if player_on_platform is set to False,
-        if self.player_on_platform == False:
-            self.rect.y = self.rect.y + 3 # -- add 3 pixels to the y-direction
-    # - END Gravity method
-
     def jump(self):
         # -- check whether the player is on the platform,
         if self.player_on_platform == True:
-            self.rect.y -= 100 # -- move the player sprite 100 pixels upwards
+            self.rect.y -= 0 # -- move the player sprite 100 pixels upwards
     # - END Jump method
 # - END CLASS
 
@@ -351,11 +380,11 @@ def game():
         all_sprites_group.update() # -- Run the Update method on all_sprites_group
 
         # -- If the player and platforms_group collide,
-        if collision(player, platforms_group) == True:
-            player.player_on_platform = True # -- Set the player_on_platform to True
-            player.rect.bottom = collisionCoordinates(player, platforms_group)[0].rect.top # -- set the bottom y-value of player to the top y-value of the platform
-        else:
-            player.player_on_platform = False # -- Set the player_on_platform to False
+        #if collision(player, platforms_group) == True:
+            #player.player_on_platform = True # -- Set the player_on_platform to True
+            #player.rect.bottom = collisionCoordinates(player, platforms_group)[0].rect.top # -- set the bottom y-value of player to the top y-value of the platform
+        #else:
+            #player.player_on_platform = False # -- Set the player_on_platform to False
         # -- END IF
 
         pygame.display.update() # -- update the display
