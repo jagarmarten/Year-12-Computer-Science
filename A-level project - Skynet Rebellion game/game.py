@@ -127,6 +127,7 @@ class Platform(pygame.sprite.Sprite):
     # - END Update method
 # - END CLASS
 
+"""
 # - collision FUNCTION
 def collision(group_one, group_two):
     hit = pygame.sprite.spritecollide(group_one, group_two, False) # -- check whether group_one and group_two collided
@@ -141,6 +142,7 @@ def collision(group_one, group_two):
 def collisionCoordinates(group_one, group_two):
     return pygame.sprite.spritecollide(group_one, group_two, False) # -- return the spritecollide object
 # - END FUNCTION
+"""
 
 # - platforms array
 # -- width, height, x and y-coordinates of the platform
@@ -386,13 +388,15 @@ def game():
         all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
         all_sprites_group.update() # -- Run the Update method on all_sprites_group
 
+        """
         # -- If the player and platforms_group collide,
-        #if collision(player, platforms_group) == True:
-            #player.player_on_platform = True # -- Set the player_on_platform to True
-            #player.rect.bottom = collisionCoordinates(player, platforms_group)[0].rect.top # -- set the bottom y-value of player to the top y-value of the platform
-        #else:
-            #player.player_on_platform = False # -- Set the player_on_platform to False
+        if collision(player, platforms_group) == True:
+            player.player_on_platform = True # -- Set the player_on_platform to True
+            player.rect.bottom = collisionCoordinates(player, platforms_group)[0].rect.top # -- set the bottom y-value of player to the top y-value of the platform
+        else:
+            player.player_on_platform = False # -- Set the player_on_platform to False
         # -- END IF
+        """
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
