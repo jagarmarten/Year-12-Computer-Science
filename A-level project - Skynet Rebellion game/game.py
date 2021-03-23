@@ -90,6 +90,16 @@ class Player(pygame.sprite.Sprite):
         # -- check whether the player is on the platform,
         if self.player_on_platform == True:
             self.rect.y -= 0 # -- move the player sprite 100 pixels upwards
+
+    def jump(self):
+        # -- check whether the player is on the platform
+        self.rect.y += 2 # -- set the rect.y to the current position + 2px
+        platform_hit_list = pygame.sprite.spritecollide(self, platforms_group, False) # -- check if we are on a platform
+        self.rect.y -= 2 # -- set the rect.y to the current position - 2px
+ 
+        # -- if the player sprite can jump, set the change_y upwards
+        if len(platform_hit_list) > 0:
+            self.change_y = -10 # -- set change_y to -10
     # - END Jump method
 # - END CLASS
 
