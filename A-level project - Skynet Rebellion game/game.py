@@ -28,6 +28,8 @@ class Player(pygame.sprite.Sprite):
 
         self.change_x = 0 # -- setting the speed vector of the player (x direction)
         self.change_y = 0 # -- setting the speed vector of the player (y direction)
+
+        self.level = None # -- setting the level to none
     # - END Constructor method
 
     # - Update method
@@ -35,7 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.gravity() # -- calculate the gravity
         self.rect.x += self.change_x # -- move the player sprite to the left or right
 
-        block_hit_list = pygame.sprite.spritecollide(self, platforms_group, False) # -- see if we hit a platform
+        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_group, False) # -- see if we hit a platform
         # -- loop through the block_hit_list
         for block in block_hit_list:
             # -- if the player sprite is moving to the right and hits an object
@@ -48,7 +50,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.y += self.change_y # -- move the player sprite up and down
  
-        block_hit_list = pygame.sprite.spritecollide(self, platforms_group, False) # -- see if we hit a platform
+        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_group, False) # -- see if we hit a platform
         # -- loop through the block_hit_list
         for block in block_hit_list:
             # -- if the player sprite is moving downwards and hits an object
@@ -90,7 +92,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         # -- check whether the player is on the platform
         self.rect.y += 2 # -- set the rect.y to the current position + 2px
-        platform_hit_list = pygame.sprite.spritecollide(self, platforms_group, False) # -- check if we are on a platform
+        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_group, False) # -- check if we are on a platform
         self.rect.y -= 2 # -- set the rect.y to the current position - 2px
 
         # -- if the player sprite can jump, set the change_y
@@ -112,47 +114,64 @@ class Platform(pygame.sprite.Sprite):
         self.rect.x = x_coord # -- set the x coordinate
         self.rect.y = y_coord # -- set the y coordinate
     # - END Constructor method
+# - END CLASS
+
+# - Platform CLASS
+# -- attributes: 
+class Level():
+    # - Constructor method
+    def __init__(self, player):
+        self.platform_group = pygame.sprite.Group() # -- creating a new platform_group
+        self.player = player # -- assigning the Player object to player
+        self.world_shift = 0 # -- set the world_shift to 0
+    # - END Constructor method
 
     # - Update method
     def update(self):
-        key_pressed = pygame.key.get_pressed() # -- check if a key was pressed
-        
-        # -- if the left arrow key was pressed,
-        if key_pressed[pygame.K_LEFT]:
-            self.rect.x += 3 # -- move the sprite 3 pixels to the left
-        
-        # -- if the right arrow key was pressed,
-        if key_pressed[pygame.K_RIGHT]:
-            self.rect.x -= 3 # -- move the sprite 3 pixels to the right
+        self.platform_group.update() # -- update everything in the level
     # - END Update method
-# - END CLASS
 
-# - platforms array
-# -- width, height, x and y-coordinates of the platform
-platforms = [
-    [300, 30, 200, 350],
-    [300, 30, 100, 250],
-    [300, 30, 400, 550],
-    [300, 30, 650, 500],
-    [300, 30, 400, 400],
-    [300, 30, 820, 300],
-]
-# - END platforms array
+    # - Draw method
+    def draw(self, screen):
+        self.platform_group.draw(screen) # -- draw all of the sprites on the screen
+    # - END Draw method
+    
+    # - Shift_world method
+    def shift_world(self, shift_x):
+        self.world_shift += shift_x # -- increment the world_shift variable
+ 
+        # -- go through all the platforms in the platform_group,
+        for platform in self.platform_group:
+            platform.rect.x += shift_x # -- set the rect.x to rect.x + shift_x#
+        # -- END for
+    # - END Shift_world method
 
-player = Player() # -- create an instance of the Player class
+# Create platforms for the level
+class Level_01(Level):
+ 
+    def __init__(self, player):
+        """ Create level 1. """
+ 
+        # Call the parent constructor
+        Level.__init__(self, player)
+ 
+        self.level_limit = -1000
+ 
+        # Array with width, height, x, and y of platform
+        # -- width, height, x and y-coordinates of the platform
+        level = [
+            [300, 30, 200, 350],
+            [300, 30, 100, 250],
+            [300, 30, 400, 550],
+            [300, 30, 650, 500],
+            [300, 30, 400, 400],
+            [300, 30, 820, 300],
+        ]
 
-platforms_group = pygame.sprite.Group() # -- create a platforms group
-
-# - platforms for loop
-# -- this for loop is responsible for creating platform instances from an array
-for platform in platforms:
-    platform_sprite = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the platforms array
-    platforms_group.add(platform_sprite) # -- add the instance of Platform class (platform_sprite) to the platform_group
-# - END platforms for loop
-
-all_sprites_group = pygame.sprite.Group() # -- create a new sprite group
-all_sprites_group.add(player) # -- add the player sprite into all_sprites_group
-all_sprites_group.add(platforms_group) # -- add the platform_group into all_sprites_group
+        for platform in level:
+            block = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the platforms array
+            block.player = self.player
+            self.platform_group.add(block)
 
 # - DRAW TEXT FUNCTION
 # -- parameters: text, font, colour, surface, x-coord and y-coord, coordinates_method
@@ -297,6 +316,23 @@ def game():
     click = False # -- set click to False
     lives = 3 # -- set lives to 3
     score = 0 # -- set score to 0
+
+    player = Player()
+
+    # Create all the levels
+    level_list = []
+    level_list.append(Level_01(player))
+    #level_list.append(Level_02(player))
+ 
+    # Set the current level
+    current_level_no = 0
+    current_level = level_list[current_level_no]
+ 
+    active_sprite_list = pygame.sprite.Group()
+    player.level = current_level
+
+    active_sprite_list.add(player)
+
     # - game() while loop
     while running:
         screen.fill((0, 0, 0)) # -- fill the screen with black colour
@@ -368,8 +404,36 @@ def game():
             # - END IF
         # - END FOR
 
-        all_sprites_group.draw(screen) # -- Draw all the sprites on the screen
-        all_sprites_group.update() # -- Run the Update method on all_sprites_group
+        # Update the player.
+        active_sprite_list.update()
+ 
+        # Update items in the level
+        current_level.update()
+ 
+        # If the player gets near the right side, shift the world left (-x)
+        if player.rect.right >= 680:
+            diff = player.rect.right - 680
+            player.rect.right = 680
+            current_level.shift_world(-diff)
+ 
+        # If the player gets near the left side, shift the world right (+x)
+        if player.rect.left <= 120:
+            diff = 120 - player.rect.left
+            player.rect.left = 120
+            current_level.shift_world(diff)
+ 
+        # If the player gets to the end of the level, go to the next level
+        current_position = player.rect.x + current_level.world_shift
+        if current_position < current_level.level_limit:
+            player.rect.x = 120
+            if current_level_no < len(level_list)-1:
+                current_level_no += 1
+                current_level = level_list[current_level_no]
+                player.level = current_level
+ 
+        # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+        current_level.draw(screen)
+        active_sprite_list.draw(screen)
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
