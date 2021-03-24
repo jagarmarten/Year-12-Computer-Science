@@ -412,7 +412,7 @@ def game():
             player.rect.right = 680 # -- set the player.rect.left to 680
             current_level.shift_world(-difference) # -- shift the world by the difference
         # - END IF
- 
+
         # -- if the player gets near the left side, shift the world left (by +x)
         if player.rect.left <= 120:
             difference = 120 - player.rect.left # -- calculate the difference
