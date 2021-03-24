@@ -145,19 +145,17 @@ class Level():
             platform.rect.x += shift_x # -- set the rect.x to rect.x + shift_x#
         # -- END for
     # - END Shift_world method
+# - END CLASS
 
-# Create platforms for the level
+# - Platform CLASS
+# -- attributes: Level
 class Level_01(Level):
- 
+    # - Constructor method
     def __init__(self, player):
-        """ Create level 1. """
+        Level.__init__(self, player) # -- call the parent constructor
+        self.level_limit = -1000 # -- set the level_limit to -1000
  
-        # Call the parent constructor
-        Level.__init__(self, player)
- 
-        self.level_limit = -1000
- 
-        # Array with width, height, x, and y of platform
+        # -- Level platforms
         # -- width, height, x and y-coordinates of the platform
         level = [
             [300, 30, 200, 350],
@@ -168,10 +166,14 @@ class Level_01(Level):
             [300, 30, 820, 300],
         ]
 
+        # -- loop through all of the platforms in the level list
         for platform in level:
-            block = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the platforms array
-            block.player = self.player
-            self.platform_group.add(block)
+            block = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the list array
+            block.player = self.player # -- set block.player to the player object
+            self.platform_group.add(block) # -- add the block to the platform_group
+        # - END FOR
+    # - END Constructer method
+# - END CLASS
 
 # - DRAW TEXT FUNCTION
 # -- parameters: text, font, colour, surface, x-coord and y-coord, coordinates_method
@@ -317,21 +319,18 @@ def game():
     lives = 3 # -- set lives to 3
     score = 0 # -- set score to 0
 
-    player = Player()
+    player = Player() # -- create an instance of the Player class
 
-    # Create all the levels
-    level_list = []
-    level_list.append(Level_01(player))
-    #level_list.append(Level_02(player))
+    level_list = [] # --level_list array
+    level_list.append(Level_01(player)) # -- add the instance of Level_01(player) to the level_list array
  
-    # Set the current level
-    current_level_no = 0
-    current_level = level_list[current_level_no]
+    current_level_no = 0 # -- set the current_level_no to 0
+    current_level = level_list[current_level_no] # -- get the current level value from the level_list array
  
-    active_sprite_list = pygame.sprite.Group()
-    player.level = current_level
+    active_sprite_list = pygame.sprite.Group() # -- create an active_sprite_list sprites group
+    player.level = current_level # -- set the player level to the current level
 
-    active_sprite_list.add(player)
+    active_sprite_list.add(player) # -- add the instance of player to the active_sprite_list
 
     # - game() while loop
     while running:
@@ -404,36 +403,37 @@ def game():
             # - END IF
         # - END FOR
 
-        # Update the player.
-        active_sprite_list.update()
+        active_sprite_list.update() # -- update the sprites in active_sprite_list
+        current_level.update() # -- update items in the current_level
  
-        # Update items in the level
-        current_level.update()
- 
-        # If the player gets near the right side, shift the world left (-x)
+        # -- if the player gets near the right side, shift the world left (by -x)
         if player.rect.right >= 680:
-            diff = player.rect.right - 680
-            player.rect.right = 680
-            current_level.shift_world(-diff)
+            difference = player.rect.right - 680 # -- calculate the difference
+            player.rect.right = 680 # -- set the player.rect.left to 680
+            current_level.shift_world(-difference) # -- shift the world by the difference
+        # - END IF
  
-        # If the player gets near the left side, shift the world right (+x)
+        # -- if the player gets near the left side, shift the world left (by +x)
         if player.rect.left <= 120:
-            diff = 120 - player.rect.left
-            player.rect.left = 120
-            current_level.shift_world(diff)
+            difference = 120 - player.rect.left # -- calculate the difference
+            player.rect.left = 120 # -- set the player.rect.left to 120
+            current_level.shift_world(difference) # -- shift the world by the difference
+        # - END IF
  
-        # If the player gets to the end of the level, go to the next level
-        current_position = player.rect.x + current_level.world_shift
+        current_position = player.rect.x + current_level.world_shift # -- set the current_position to player's rect.x + the current world_shift value
+        # -- if the player gets to the end of the level, to to the next level
         if current_position < current_level.level_limit:
-            player.rect.x = 120
-            if current_level_no < len(level_list)-1:
-                current_level_no += 1
-                current_level = level_list[current_level_no]
-                player.level = current_level
+            player.rect.x = 120 # -- set the rect.x value
+            # -- if the current_level_no is lower than the length of the list - 1,
+            if current_level_no < len(level_list) - 1:
+                current_level_no += 1 # -- increment the level_no by 1
+                current_level = level_list[current_level_no] # -- get the current level value from the level_list array
+                player.level = current_level # -- set player.level to the current_level
+            # - END IF
+        # - END IF
  
-        # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
-        current_level.draw(screen)
-        active_sprite_list.draw(screen)
+        current_level.draw(screen) # -- draw the current level on the screen
+        active_sprite_list.draw(screen) # -- draw sprites in the active_sprite_list on the screen
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
