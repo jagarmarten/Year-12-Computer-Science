@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
     # - Constructor method
     def __init__(self):
         super().__init__() # -- calling the methods of the superclass
-        self.image = pygame.Surface([50, 100]) # -- create a new surface - 50 by 100px
+        self.image = pygame.Surface([40, 80]) # -- create a new surface - 50 by 100px
         self.image.fill((255,255,255)) # -- fill the surface with white colour
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
         self.rect.x = 250 # -- set the x coordinate
@@ -75,12 +75,12 @@ class Player(pygame.sprite.Sprite):
 
     # - Move_left method
     def move_left(self):
-        self.change_x = -3
+        self.change_x = -6
     # - END Move_left method
- 
+
     # - Move_right method
     def move_right(self):
-        self.change_x = 3
+        self.change_x = 6
     # - Move_right method
 
     # - stop method
@@ -97,7 +97,7 @@ class Player(pygame.sprite.Sprite):
 
         # -- if the player sprite can jump, set the change_y
         if len(platform_hit_list) > 0:
-            self.change_y = -10 # -- set change_y to -10
+            self.change_y = -11 # -- set change_y to -12
         # -- END IF
     # - END Jump method
 # - END CLASS
@@ -116,7 +116,7 @@ class Platform(pygame.sprite.Sprite):
     # - END Constructor method
 # - END CLASS
 
-# - Platform CLASS
+# - Level CLASS
 # -- attributes: 
 class Level():
     # - Constructor method
@@ -147,23 +147,136 @@ class Level():
     # - END Shift_world method
 # - END CLASS
 
-# - Platform CLASS
+# - Level_01 CLASS
 # -- attributes: Level
 class Level_01(Level):
     # - Constructor method
     def __init__(self, player):
         Level.__init__(self, player) # -- call the parent constructor
-        self.level_limit = -1000 # -- set the level_limit to -1000
+        self.level_limit = -4000 # -- set the level_limit to -1000
  
         # -- Level platforms
         # -- width, height, x and y-coordinates of the platform
         level = [
-            [300, 30, 200, 350],
-            [300, 30, 100, 250],
-            [300, 30, 400, 550],
-            [300, 30, 650, 500],
-            [300, 30, 400, 400],
-            [300, 30, 820, 300],
+            [300, 40, 0, 80],
+            [40, 230, 300, 80],
+            [240, 40, 300, 310],
+            [40, 150, 540, 310],
+            [180, 40, 580, 420],
+            [40, 290, 760, 170],
+            [240, 40, 800, 170],
+            [40, 210, 1000, 210],
+            [420, 40, 1000, 420],
+            [40, 150, 1420, 310],
+            [200, 40, 1460, 310],
+            [40, 150, 1660, 310],
+            [620, 40, 1700, 420],
+            [260, 40, 1880, 310],
+            [40, 150, 2320, 310],
+            [200, 40, 2360, 310],
+            [40, 150, 2560, 310],
+            [200, 40, 2600, 420],
+            [40, 80, 2760, 460],
+            [380, 40, 2800, 500],
+            [40, 80, 3180, 460],
+            [620, 40, 3180, 420],
+            [40, 150, 3800, 310],
+            [200, 40, 3840, 310],
+            [40, 350, 4040, 0]
+        ]
+
+        # -- loop through all of the platforms in the level list
+        for platform in level:
+            block = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the list array
+            block.player = self.player # -- set block.player to the player object
+            self.platform_group.add(block) # -- add the block to the platform_group
+        # - END FOR
+    # - END Constructer method
+# - END CLASS
+
+
+# - Level_02 CLASS
+# -- attributes: Level
+class Level_02(Level):
+    # - Constructor method
+    def __init__(self, player):
+        Level.__init__(self, player) # -- call the parent constructor
+        self.level_limit = -3000 # -- set the level_limit to -1000
+ 
+        # -- Level platforms
+        # -- width, height, x and y-coordinates of the platform
+        level = [
+            [40, 459, 220, 0],
+            [900, 40, 260, 419],
+            [40, 259, 740, 0] ,
+            [240, 40, 740, 259],
+            [40, 259, 940, 0],
+            [40, 120, 1160, 339],
+            [120, 40, 1200, 339],
+            [40, 120, 1320, 259],
+            [120, 40, 1360, 259],
+            [40, 120, 1480, 179],
+            [120, 40, 1520, 179],
+            [40, 370, 1640, 179],
+            [600, 40, 1680, 509],
+            [240, 40, 1860, 259],
+            [40, 80, 2280, 469],
+            [1438, 40, 2280, 429],
+            [40, 80, 2400, 349],
+            [40, 80, 2890, 349],
+            [40, 469, 3718, 0]
+        ]
+
+        # -- loop through all of the platforms in the level list
+        for platform in level:
+            block = Platform(platform[0], platform[1], platform[2], platform[3]) # -- create an instance of a Platform, and pass in the parameters from the list array
+            block.player = self.player # -- set block.player to the player object
+            self.platform_group.add(block) # -- add the block to the platform_group
+        # - END FOR
+    # - END Constructer method
+# - END CLASS
+
+# - Level_03 CLASS
+# -- attributes: Level
+class Level_03(Level):
+    # - Constructor method
+    def __init__(self, player):
+        Level.__init__(self, player) # -- call the parent constructor
+        self.level_limit = -3000 # -- set the level_limit to -1000
+ 
+        # -- Level platforms
+        # -- width, height, x and y-coordinates of the platform
+        level = [
+            [40, 459, 220, 0],
+            [470, 40, 260, 419],
+            [40, 120, 730, 339],
+            [120, 40, 770, 339],
+            [40, 170, 890, 339],
+            [120, 40, 930, 469],
+            [40, 330, 1050, 179],
+            [120, 40, 1090, 179],
+            [40, 370, 1210, 179],
+            [400, 40, 1250, 509],
+            [360, 40, 1450, 179],
+            [40, 370, 1810, 179],
+            [519, 40, 1850, 509],
+            [40, 409, 2089, 0],
+            [40, 140, 2369, 409],
+            [120, 40, 2409, 409],
+            [40, 140, 2529, 409],
+            [690, 40, 2569, 509],
+            [90, 100, 2869, 409],
+            [90, 100, 2866, 0],
+            [40, 140, 3259, 409],
+            [560, 40, 3299, 409],
+            [100, 40, 3579, 269],
+            [40, 309, 3539, 0],
+            [100, 40, 3759, 149],
+            [40, 400, 3859, 149],
+            [248, 40, 3899, 509],
+            [40, 140, 4147, 409],
+            [325, 40, 4187, 409],
+            [40, 449, 4512, 0]
         ]
 
         # -- loop through all of the platforms in the level list
@@ -323,6 +436,7 @@ def game():
 
     level_list = [] # --level_list array
     level_list.append(Level_01(player)) # -- add the instance of Level_01(player) to the level_list array
+    level_list.append(Level_02(player)) # -- add the instance of Level_02(player) to the level_list array
  
     current_level_no = 0 # -- set the current_level_no to 0
     current_level = level_list[current_level_no] # -- get the current level value from the level_list array
@@ -411,6 +525,7 @@ def game():
             difference = player.rect.right - 680 # -- calculate the difference
             player.rect.right = 680 # -- set the player.rect.left to 680
             current_level.shift_world(-difference) # -- shift the world by the difference
+            print("World's shifting to the right")
         # - END IF
 
         # -- if the player gets near the left side, shift the world left (by +x)
@@ -418,6 +533,7 @@ def game():
             difference = 120 - player.rect.left # -- calculate the difference
             player.rect.left = 120 # -- set the player.rect.left to 120
             current_level.shift_world(difference) # -- shift the world by the difference
+            print("World's shifting to the left")
         # - END IF
  
         current_position = player.rect.x + current_level.world_shift # -- set the current_position to player's rect.x + the current world_shift value
