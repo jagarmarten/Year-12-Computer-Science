@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() # -- calling the methods of the superclass
         self.image = pygame.Surface([40, 80]) # -- create a new surface - 50 by 100px
-        self.image.fill((255,255,255)) # -- fill the surface with white colour
+        self.image.fill((64,64,64)) # -- fill the surface with grey colour
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
         self.rect.x = 250 # -- set the x coordinate
         self.rect.y = 0 # -- set the y coordinate
@@ -109,7 +109,7 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, width, height, x_coord, y_coord):
         super().__init__() # -- calling the methods of the superclass
         self.image = pygame.Surface([width, height]) # -- create a new surface - width by height pixels (depends on the parameters passed)
-        self.image.fill((0,128,0)) # -- fill the surface with white colour
+        self.image.fill((255,255,255)) # -- fill the surface with white colour
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
         self.rect.x = x_coord # -- set the x coordinate
         self.rect.y = y_coord # -- set the y coordinate
@@ -316,9 +316,9 @@ click = False
 def main_menu():
     running = True
     while running:
-        screen.fill((0, 0, 255)) # -- fill the screen with blue colour
+        screen.fill((0, 110, 255)) # -- fill the screen with blue colour
         
-        draw_text('SKYNET REBELLION', fontOne, (0,0,0), screen, 400, 270, "center") # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        draw_text('SKYNET REBELLION', fontOne, (255,255,255), screen, 400, 270, "center") # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
         mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
 
@@ -332,8 +332,8 @@ def main_menu():
                 game() # -- run the game function
         # - END IF
 
-        pygame.draw.rect(screen, (255, 0, 0), mainMenuPlayButton) # -- draw the rect object on the screen
-        draw_text('START GAME', fontTwo, (0,0,0), screen, 400, 370, "center") # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
+        pygame.draw.rect(screen, (255, 63, 0), mainMenuPlayButton) # -- draw the rect object on the screen
+        draw_text('START GAME', fontTwo, (255,255,255), screen, 400, 370, "center") # -- render a "SKYNET REBELLION" text on the screen with a black colour, and coordinates x=100 y=300
 
         click = False # -- set click to False
 
@@ -369,7 +369,7 @@ def pause():
     paused = True # -- set paused to True
     # -- while paused is set to True:
     while paused:
-        screen.fill((255, 255, 255)) # -- fill the screen with black colour
+        screen.fill((0, 110, 255)) # -- fill the screen with white colour
         mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
 
         unpauseButton = pygame.Rect(0, 0, 400, 50) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
@@ -383,8 +383,8 @@ def pause():
             # - END IF
         # - END IF
 
-        pygame.draw.rect(screen, (255, 0, 0), unpauseButton) # -- draw the rect object on the screen
-        draw_text('RESUME GAME', fontTwo, (0,0,0), screen, 400, 370, "center") # -- render a "RESUME GAME" text on the screen with a black colour, and coordinates x=400 y=370
+        pygame.draw.rect(screen, (255, 63, 0), unpauseButton) # -- draw the rect object on the screen
+        draw_text('RESUME GAME', fontTwo, (255,255,255), screen, 400, 370, "center") # -- render a "RESUME GAME" text on the screen with a black colour, and coordinates x=400 y=370
 
         click = False # -- set click to False
         pygame.display.update() # -- update the display
@@ -418,7 +418,7 @@ def pause():
             # - END IF
         # - END FOR
 
-        draw_text('GAME PAUSED', fontOne, (0,0,0), screen, 400, 270, "center") # -- render a "GAME PAUSED" text on the screen
+        draw_text('GAME PAUSED', fontOne, (255,255,255), screen, 400, 270, "center") # -- render a "GAME PAUSED" text on the screen
 
         pygame.display.update() # -- update the display
         fpsClock.tick(5) # -- set the display to 5fps
@@ -448,7 +448,7 @@ def game():
 
     # - game() while loop
     while running:
-        screen.fill((0, 0, 0)) # -- fill the screen with black colour
+        screen.fill((0, 162, 255)) # -- fill the screen with blue colour
         mouse_x, mouse_y = mouse_position() # -- get the mouse_x and mouse_y
 
         pauseButton = pygame.Rect(0, 0, 40, 40) # -- create a new rect object with coordinates x=0, y=0 and witdh=400, height=50
@@ -464,9 +464,6 @@ def game():
 
         pygame.draw.rect(screen, (255, 0, 0), pauseButton) # -- draw the rect object on the screen
         draw_text('| |', fontTwo, (255,255,255), screen, 780, 10, "top-right") # -- render a "| |" text on the screen
-
-        draw_text("Lives left: " + str(lives), fontTwo, (255,255,255), screen, 20, 10, "top-left") # -- render "Lives left: " text on the screen
-        draw_text("Score: " + str(score), fontTwo, (255,255,255), screen, 140, 10, "top-left") # -- render "Score" text on the screen
 
         click = False # -- set click to False
         # - FOR loop which listens to events
@@ -547,9 +544,12 @@ def game():
                 player.level = current_level # -- set player.level to the current_level
             # - END IF
         # - END IF
- 
+
         current_level.draw(screen) # -- draw the current level on the screen
         active_sprite_list.draw(screen) # -- draw sprites in the active_sprite_list on the screen
+
+        draw_text("Lives left: " + str(lives), fontTwo, (255,255,255), screen, 20, 10, "top-left") # -- render "Lives left: " text on the screen
+        draw_text("Score: " + str(score), fontTwo, (255,255,255), screen, 140, 10, "top-left") # -- render "Score" text on the screen
 
         pygame.display.update() # -- update the display
         fpsClock.tick(FPS) # -- set the display to 60fps
