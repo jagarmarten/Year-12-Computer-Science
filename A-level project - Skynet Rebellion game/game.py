@@ -22,8 +22,6 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.Surface([40, 80]) # -- create a new surface - 50 by 100px
         self.image.fill((64,64,64)) # -- fill the surface with grey colour
         self.rect = self.image.get_rect() # -- catch the object which has the dimension of the image
-        self.rect.x = 250 # -- set the x coordinate
-        self.rect.y = 0 # -- set the y coordinate
         self.player_on_platform = True # -- player standing on the platform
 
         self.change_x = 0 # -- setting the speed vector of the player (x direction)
@@ -153,7 +151,10 @@ class Level_01(Level):
     # - Constructor method
     def __init__(self, player):
         Level.__init__(self, player) # -- call the parent constructor
-        self.level_limit = -4000 # -- set the level_limit to -1000
+        self.level_limit = -2700 # -- set the level_limit to -1000
+
+        player.rect.x = 650 # -- set the x coordinate of the player sprite
+        player.rect.y = 350 # -- set the y coordinate of the player sprite
  
         # -- Level platforms
         # -- width, height, x and y-coordinates of the platform
@@ -194,21 +195,20 @@ class Level_01(Level):
     # - END Constructer method
 # - END CLASS
 
-
 # - Level_02 CLASS
 # -- attributes: Level
 class Level_02(Level):
     # - Constructor method
     def __init__(self, player):
         Level.__init__(self, player) # -- call the parent constructor
-        self.level_limit = -3000 # -- set the level_limit to -1000
- 
+        self.level_limit = -2750 # -- set the level_limit to -1000
+
         # -- Level platforms
         # -- width, height, x and y-coordinates of the platform
         level = [
             [40, 459, 220, 0],
             [900, 40, 260, 419],
-            [40, 259, 740, 0] ,
+            [40, 259, 740, 0],
             [240, 40, 740, 259],
             [40, 259, 940, 0],
             [40, 120, 1160, 339],
@@ -242,7 +242,7 @@ class Level_03(Level):
     # - Constructor method
     def __init__(self, player):
         Level.__init__(self, player) # -- call the parent constructor
-        self.level_limit = -3000 # -- set the level_limit to -1000
+        self.level_limit = -4700 # -- set the level_limit to -1000
  
         # -- Level platforms
         # -- width, height, x and y-coordinates of the platform
@@ -437,6 +437,7 @@ def game():
     level_list = [] # --level_list array
     level_list.append(Level_01(player)) # -- add the instance of Level_01(player) to the level_list array
     level_list.append(Level_02(player)) # -- add the instance of Level_02(player) to the level_list array
+    level_list.append(Level_03(player)) # -- add the instance of Level_03(player) to the level_list array
  
     current_level_no = 0 # -- set the current_level_no to 0
     current_level = level_list[current_level_no] # -- get the current level value from the level_list array
@@ -518,25 +519,24 @@ def game():
         current_level.update() # -- update items in the current_level
  
         # -- if the player gets near the right side, shift the world left (by -x)
-        if player.rect.right >= 680:
-            difference = player.rect.right - 680 # -- calculate the difference
-            player.rect.right = 680 # -- set the player.rect.left to 680
+        if player.rect.right >= 480:
+            difference = player.rect.right - 480 # -- calculate the difference
+            player.rect.right = 480 # -- set the player.rect.left to 680
             current_level.shift_world(-difference) # -- shift the world by the difference
-            print("World's shifting to the right")
         # - END IF
 
         # -- if the player gets near the left side, shift the world left (by +x)
-        if player.rect.left <= 120:
-            difference = 120 - player.rect.left # -- calculate the difference
-            player.rect.left = 120 # -- set the player.rect.left to 120
+        if player.rect.left <= 320:
+            difference = 320 - player.rect.left # -- calculate the difference
+            player.rect.left = 320 # -- set the player.rect.left to 120
             current_level.shift_world(difference) # -- shift the world by the difference
-            print("World's shifting to the left")
         # - END IF
  
         current_position = player.rect.x + current_level.world_shift # -- set the current_position to player's rect.x + the current world_shift value
         # -- if the player gets to the end of the level, to to the next level
         if current_position < current_level.level_limit:
-            player.rect.x = 120 # -- set the rect.x value
+            player.rect.x = 400 # -- set the rect.x value
+            player.rect.y = 200
             # -- if the current_level_no is lower than the length of the list - 1,
             if current_level_no < len(level_list) - 1:
                 current_level_no += 1 # -- increment the level_no by 1
