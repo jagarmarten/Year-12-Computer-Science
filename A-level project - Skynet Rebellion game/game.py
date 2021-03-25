@@ -151,7 +151,7 @@ class Level_01(Level):
     # - Constructor method
     def __init__(self, player):
         Level.__init__(self, player) # -- call the parent constructor
-        self.level_limit = -2700 # -- set the level_limit to -1000
+        self.level_limit = -3000 # -- set the level_limit to -1000
 
         player.rect.x = 650 # -- set the x coordinate of the player sprite
         player.rect.y = 350 # -- set the y coordinate of the player sprite
